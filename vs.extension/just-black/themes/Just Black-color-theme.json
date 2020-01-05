@@ -1479,7 +1479,7 @@
 		{
 			"scope": "variable.other.object.property",
 			"settings": {
-				"foreground": "#DAFFFF",
+				"foreground": "#00FFFF",
 				"fontStyle": ""
 			}
 		},
@@ -1514,6 +1514,22 @@
 			"settings": {
 				"foreground": "#cbf2ff",
 				"fontStyle": "italic bold"
+			}
+		},
+		{
+			"scope": [
+				"support.function.console",
+				"support.class.console"
+			],
+			"settings": {
+				"foreground": "#ff0000",
+				"fontStyle": ""
+			}
+		},
+		{
+			"scope": "punctuation.terminator.statement",
+			"settings": {
+				"fontStyle": ""
 			}
 		}
 	]
