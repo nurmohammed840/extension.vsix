@@ -133,7 +133,7 @@
 		"settings.dropdownBackground": "#070707",
 		"settings.dropdownForeground": "#8f93a2",
 		"settings.headerForeground": "#80cbc4",
-		"settings.modifiedItemIndicator": "#80cbc4",
+		"settings.modifiedItemIndicator": "#00ff00",
 		"settings.numberInputBackground": "#070707",
 		"settings.numberInputForeground": "#8f93a2",
 		"settings.textInputBackground": "#070707",
