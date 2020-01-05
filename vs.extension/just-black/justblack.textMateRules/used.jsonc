@@ -1,0 +1,504 @@
+	            {
+	                "scope": "comment.block", // ( 1 )                                                                      
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.language.boolean.false", // ( 7 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.language.boolean.true", // ( 8 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.language.infinity", // ( 10 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.language.nan", // ( 11 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.language.null", // ( 12 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.language.undefined", // ( 13 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.numeric.binary", // ( 14 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.numeric.decimal", // ( 15 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.numeric.hex", // ( 16 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "constant.numeric.octal", // ( 17 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "entity.name.function", // ( 18 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "entity.name.label", // ( 20 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "entity.name.type", // ( 24 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.as", // ( 38 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.conditional", // ( 39 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.default", // ( 40 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.export", // ( 41 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.flow", // ( 42 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.from", // ( 43 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.import", // ( 44 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.loop", // ( 45 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.new", // ( 46 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.require", // ( 47 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.switch", // ( 48 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.control.trycatch", // ( 49 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.arithmetic", // ( 52 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.assignment", // ( 53 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.assignment.compound", // ( 54 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.assignment.compound.bitwise", // ( 55 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.bitwise", // ( 56 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.comparison", // ( 58 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.decrement", // ( 59 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.delete", // ( 61 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.import", // ( 62 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.in", // ( 63 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.infer", // ( 64 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.instanceof", // ( 65 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.is", // ( 66 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.keyof", // ( 67 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.of", // ( 68 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.typeof", // ( 69 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.expression.void", // ( 70 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.increment", // ( 71 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.logical", // ( 72 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.new", // ( 73 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.relational", // ( 75 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	            {
+	                "scope": "keyword.operator.ternary", // ( 78 )
+	                "settings": {
+	                    "foreground": "#000000",
+	                    "fontStyle": "italic bold underline"
+	                }
+	            },
+	             {
+	                 "scope": "punctuation.accessor", // ( 138 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "storage.type", // ( 174 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "storage.type.function", // ( 177 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "storage.type.function.arrow", // ( 178 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "string.quoted.double", // ( 185 )
+	                 "settings": {
+	                     // "foreground": "#",
+	                     "fontStyle": ""
+	                 }
+	             },
+	             {
+	                 "scope": "string.quoted.single", // ( 186 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.class.builtin", // ( 190 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.constant.math", // ( 200 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.constant.property.math", // ( 201 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.function", // ( 202 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.function.console", // ( 203 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.function.dom", // ( 204 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.function.math", // ( 207 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.function.promise", // ( 209 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "support.variable.property.dom", // ( 217 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.language.arguments", // ( 224 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.language.this", // ( 226 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.other.constant", // ( 228 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.other.constant.object", // ( 229 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.other.object", // ( 233 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.other.object.property", // ( 234 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.other.property", // ( 235 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.other.readwrite", // ( 236 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             },
+	             {
+	                 "scope": "variable.parameter", // ( 238 )
+	                 "settings": {
+	                     "foreground": "#000000",
+	                     "fontStyle": "italic bold underline"
+	                 }
+	             }
