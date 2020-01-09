@@ -1,8 +1,9 @@
 {
-  "name": "altgl-plus",
-  "displayName": "altgl plus",
+  "name": "altgr-plus",
+  "displayName": "altgr plus",
   "description": "Basic Snippet for Java-script ",
   "version": "1.0.0",
+  "icon": "altgr.png",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -11,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nurmohammed840/achievement/tree/master/vs.extension/altgl-plus"
+    "url": "https://github.com/nurmohammed840/achievement/tree/master/vs.extension/altgl/altgl-plus"
   },
   "contributes": {
     "keybindings": [
