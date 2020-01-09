@@ -1,0 +1,20 @@
+{
+    "name": "altgl-plus",
+    "displayName": "altgl plus",
+    "description": "Basic Snippet for Java-script ",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.41.0"
+    },
+    "categories": [
+        "Keymaps"
+    ],
+    "contributes": {
+        "keybindings": [
+            {
+                "key": "ctrl+.",
+                "command": "workbench.action.showCommands"
+            }
+        ]
+    }
+}
