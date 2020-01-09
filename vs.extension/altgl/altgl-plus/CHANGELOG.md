@@ -1,7 +1,2 @@
-# Change Log
+# created on 2020
 
-
-
-## [Unreleased]
-
-- Initial release

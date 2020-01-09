@@ -2,13 +2,17 @@
   "name": "altgl-plus",
   "displayName": "altgl plus",
   "description": "Basic Snippet for Java-script ",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.41.0"
   },
   "categories": [
     "Keymaps"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nurmohammed840/achievement/tree/master/vs.extension/altgl-plus"
+  },
   "contributes": {
     "keybindings": [
       {
@@ -33,6 +37,22 @@
         "when": "editorTextFocus",
         "args": {
           "snippet": "while (${1:condition}) {\n\t$2\n}"
+        }
+      },
+      {
+        "key": "ctrl+alt+s",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "switch (${1:condition}) {\n\t$2\n}"
+        }
+      },
+      {
+        "key": "ctrl+alt+t",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "try {\n\t$2\n} catch (${1:condition}) {\n\t\n}"
         }
       },
       {

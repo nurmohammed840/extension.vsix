@@ -1,13 +1,19 @@
-# Alt
-## This is the README for your extension "altgl-plus"
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+# AltGl plus
+AltGl plus is a snippet extention for visual studio code
+## Snippet shortcut
+ctrl+alt+ f   = for loop
+ctrl+alt+ i   = if
+ctrl+alt+ l   = console.log
+ctrl+alt+ {   = function
+ctrl+alt+ >   = arrow => { }
+ctrl+alt+ w   = while loop 
+ctrl+alt+ $   = ${}
+ctrl+alt+ :   = object name : "value"
+ctrl+alt+ s   = switch
+ctrl+alt+ t   = try catch
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
+ more... comeing soon!
 
-### For more information
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+### Just-black
+check out my another extention
+https://marketplace.visualstudio.com/items?itemName=nur.just-black
