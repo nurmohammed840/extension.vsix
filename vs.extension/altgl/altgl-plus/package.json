@@ -4,6 +4,7 @@
   "description": "Basic Snippet for Java-script ",
   "version": "1.0.0",
   "icon": "altgr.png",
+  "publisher": "Nur",
   "engines": {
     "vscode": "^1.41.0"
   },
