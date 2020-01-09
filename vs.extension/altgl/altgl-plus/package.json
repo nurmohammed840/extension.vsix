@@ -1,20 +1,80 @@
 {
-    "name": "altgl-plus",
-    "displayName": "altgl plus",
-    "description": "Basic Snippet for Java-script ",
-    "version": "0.0.1",
-    "engines": {
-        "vscode": "^1.41.0"
-    },
-    "categories": [
-        "Keymaps"
-    ],
-    "contributes": {
-        "keybindings": [
-            {
-                "key": "ctrl+.",
-                "command": "workbench.action.showCommands"
-            }
-        ]
-    }
+  "name": "altgl-plus",
+  "displayName": "altgl plus",
+  "description": "Basic Snippet for Java-script ",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Keymaps"
+  ],
+  "contributes": {
+    "keybindings": [
+      {
+        "key": "ctrl+alt+oem_1",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "${1:name} : ${2:value},"
+        }
+      },
+      {
+        "key": "ctrl+alt+i",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "if (${1:condition}) {\n\t$2\n}"
+        }
+      },
+      {
+        "key": "ctrl+alt+w",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "while (${1:condition}) {\n\t$2\n}"
+        }
+      },
+      {
+        "key": "ctrl+alt+4",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "${$1}"
+        }
+      },
+      {
+        "key": "ctrl+alt+oem_4",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "function ${1:name}(${2:parameter}) {\n\t$3\n}"
+        }
+      },
+      {
+        "key": "ctrl+alt+f",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "for (let ${1:i} = 0; ${1:i} < ${2: array.length}; ${1:i}++) {\n  $3 \n}"
+        }
+      },
+      {
+        "key": "ctrl+alt+l",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "console.log($1)"
+        }
+      },
+      {
+        "key": "ctrl+alt+oem_period",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "($1) => {$2}"
+        }
+      }
+    ]
+  }
 }
