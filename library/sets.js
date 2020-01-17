@@ -4,7 +4,7 @@ let set = (function() {
       union: union,
       intersection: intersection,
       complement: complement,
-      equels: equels
+      equals: equals
     };
   }
 
@@ -43,7 +43,7 @@ let set = (function() {
     }
   };
 
-  let equels = (LHS, RHS) => {
+  let equals = (LHS, RHS) => {
     if (!(LHS instanceof Array)) return "false > L.H.S is't an array";
     if (!(RHS instanceof Array)) return "false > R.H.S is't an array";
     if (LHS.length != RHS.length) return false;
