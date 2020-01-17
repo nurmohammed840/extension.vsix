@@ -1,4 +1,13 @@
 let set = (function() {
+  function _return() {
+    return {
+      union: union,
+      intersection: intersection,
+      complement: complement,
+      equels: equels
+    };
+  }
+
   let union = function(set) {
     try {
       let sets = new Set(set);
@@ -34,9 +43,13 @@ let set = (function() {
     }
   };
 
-  return {
-    union: union,
-    intersection: intersection,
-    complement: complement
+  let equels = (LHS, RHS) => {
+    if (!(LHS instanceof Array)) return "false > L.H.S is't an array";
+    if (!(RHS instanceof Array)) return "false > R.H.S is't an array";
+    if (LHS.length != RHS.length) return false;
+    let to_string = x => JSON.stringify(x.sort((a, b) => a - b));
+    return to_string(LHS) == to_string(RHS);
   };
+
+  return _return();
 })();
