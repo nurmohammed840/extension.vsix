@@ -8,7 +8,7 @@ let set = (function() {
       powerSet: powerSet
     };
   }
-
+  //====================================================================
   let union = function(set) {
     try {
       let sets = new Set(set);
@@ -20,7 +20,7 @@ let set = (function() {
       console.log(err.name, ": only accept arrays , strings or sets");
     }
   };
-
+  //====================================================================
   let intersection = function(a, b) {
     try {
       let set = [];
@@ -35,7 +35,7 @@ let set = (function() {
       console.log(err.name, ": only accept arrays , strings or sets");
     }
   };
-
+  //====================================================================
   let complement = (a, b) => {
     try {
       return a.filter(e => !b.includes(e));
@@ -43,7 +43,7 @@ let set = (function() {
       console.log(err.name);
     }
   };
-
+  //====================================================================
   let equals = (LHS, RHS) => {
     if (!(LHS instanceof Array)) return "false > L.H.S is't an array";
     if (!(RHS instanceof Array)) return "false > R.H.S is't an array";
@@ -51,7 +51,7 @@ let set = (function() {
     let to_string = x => JSON.stringify(x.sort((a, b) => a - b));
     return to_string(LHS) == to_string(RHS);
   };
-
+  //====================================================================
   let powerSet = arr => {
     var res = [];
     var len = arr.length;
@@ -66,6 +66,6 @@ let set = (function() {
     }
     return res;
   };
-
+  //====================================================================
   return _return();
 })();
