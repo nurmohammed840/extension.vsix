@@ -4,7 +4,8 @@ let set = (function() {
       union: union,
       intersection: intersection,
       complement: complement,
-      equals: equals
+      equals: equals,
+      powerSet: powerSet
     };
   }
 
@@ -49,6 +50,21 @@ let set = (function() {
     if (LHS.length != RHS.length) return false;
     let to_string = x => JSON.stringify(x.sort((a, b) => a - b));
     return to_string(LHS) == to_string(RHS);
+  };
+
+  let powerSet = arr => {
+    var res = [];
+    var len = arr.length;
+    for (var i = 0; i < Math.pow(2, len); i++) {
+      var aux = [];
+      for (var j = 0; j < len; j++) {
+        if (i & (1 << j)) {
+          aux.push(arr[j]);
+        }
+      }
+      res.push(aux);
+    }
+    return res;
   };
 
   return _return();
