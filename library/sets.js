@@ -1,3 +1,5 @@
+// Do not use this library.its maybe unstable.not tested.you could find some bugs
+
 let set = (function() {
   function _return() {
     return {
