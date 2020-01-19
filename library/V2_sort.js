@@ -46,4 +46,4 @@ module.exports = function sort(arr) {
     });
   }
   return array;
-}
+};
