@@ -5,7 +5,7 @@ module.exports = function sort(arr) {
     disorder: disorder,
     disorderNum: disorderNum,
     reverse: reverse
-  };
+  }; 
   if (arr instanceof Array) {
     var array = arr.sort();
   } else throw "1st argument should be an Array";
