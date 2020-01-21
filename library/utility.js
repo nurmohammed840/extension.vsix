@@ -18,24 +18,3 @@ let util = (function() {
 
   return util;
 })();
-function sortNum(a, b) {
-  return a - b;
-}
-function sortNum_reverse(a, b) {
-  return b - a;
-}
-function sort(a, b) {
-  if (a < b) {
-    return -1;
-  }
-}
-function sort_reverse(a, b) {
-  if (b < a) {
-    return -1;
-  }
-}
-function reverse(a, b) {
-  if (b != a) {
-    return -1;
-  }
-}
