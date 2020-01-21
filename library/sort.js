@@ -35,6 +35,7 @@ sort(arr, { reverse: true }); //  [ 6, 5, 4, 3, 2, 1 ]
 sort(arr2, "name", { case_sensitive: false, reverse: true });
 let arr3 = sort([...arr2], "age");
 // new sorted array created from arr2 (But dosent change orginal array)
+
 console.log(arr);
 console.table(arr2);
 console.table(arr3);
