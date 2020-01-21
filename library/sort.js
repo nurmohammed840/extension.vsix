@@ -13,7 +13,6 @@ function sort(arr, prop, methods) {
     try {
       swipe = methods.reverse === true ? -1 : 1;
     } catch (e) {}
-
     arr.sort((a, b) => {
       if (key(a) < key(b)) return -1 * swipe;
       if (key(b) < key(a)) return 1 * swipe;
@@ -33,9 +32,10 @@ let arr2 = [
   { name: "asma", age: 15 }
 ];
 sort(arr, { reverse: true }); //  [ 6, 5, 4, 3, 2, 1 ]
-sort(arr2, "name", { case_sensitive: false });
-let arr3 = sort([...arr2], "name", { reverse: true, case_sensitive: false });
+sort(arr2, "name", { case_sensitive: false, reverse: true });
+let arr3 = sort([...arr2], "age");
 // new sorted array created from arr2 (But dosent change orginal array)
 console.log(arr);
-console.log(arr2);
-console.log(arr3);
+console.table(arr2);
+console.table(arr3);
+
