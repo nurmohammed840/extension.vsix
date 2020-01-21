@@ -32,7 +32,7 @@ let arr2 = [
   { name: "asma", age: 15 }
 ];
 sort(arr, { reverse: true }); //  [ 6, 5, 4, 3, 2, 1 ]
-sort(arr2, "name", { case_sensitive: false, reverse: true });
+sort(arr2, "name", { reverse: true, case_sensitive: false });
 let arr3 = sort([...arr2], "age");
 // new sorted array created from arr2 (But dosent change orginal array)
 
