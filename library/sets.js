@@ -10,7 +10,7 @@ let set = (function() {
       powerSet: powerSet
     };
   }
-  //====================================================================
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   let union = function(set) {
     try {
       let sets = new Set(set);
@@ -22,7 +22,7 @@ let set = (function() {
       console.log(err.name, ": only accept arrays , strings or sets");
     }
   };
-  //====================================================================
+  //=%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   let intersection = function(a, b) {
     try {
       let set = [];
