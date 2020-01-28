@@ -24,18 +24,4 @@ function sort(arr, prop, methods) {
   return arr;
 }
 
-let arr = [6, 2, 4, 1, 5, 3];
-let arr2 = [
-  { name: "suma", age: 12 },
-  { name: "Num", age: 18 },
-  { name: "mamun", age: 30 },
-  { name: "asma", age: 15 }
-];
-sort(arr, { reverse: true }); //  [ 6, 5, 4, 3, 2, 1 ]
-sort(arr2, "name", { reverse: true, case_sensitive: false });
-let arr3 = sort([...arr2], "age");
-// new sorted array created from arr2 (But dosent changed orginal array)
 
-console.log(arr);
-console.table(arr2);
-console.table(arr3);
