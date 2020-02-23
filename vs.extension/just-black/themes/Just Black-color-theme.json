@@ -195,7 +195,7 @@
 		"titleBar.inactiveBackground": "#0f111a",
 		"titleBar.inactiveForeground": "#525975",
 		"tree.indentGuidesStroke": "#3b3f51",
-		"widget.shadow": "#00000030",
+		"widget.shadow": "#00000030"
 		//"activityBar.activeBorder": "#ffff7e",
 		//"activityBar.dropBackground": "#ffffff1f",
 		//"button.foreground": "#ffffff",
@@ -449,7 +449,6 @@
 		{
 			"name": "Operator, Misc",
 			"scope": [
-				"keyword.control",
 				"constant.other.color",
 				"punctuation.definition.tag",
 				"punctuation",
@@ -463,15 +462,6 @@
 			],
 			"settings": {
 				"foreground": "#89DDFF"
-			}
-		},
-		{
-			"name": "Keyword Control",
-			"scope": [
-				"keyword.control"
-			],
-			"settings": {
-				"fontStyle": "italic"
 			}
 		},
 		{
@@ -490,7 +480,6 @@
 			"scope": [
 				"entity.name.function",
 				"variable.function",
-				"support.function",
 				"keyword.other.special-method"
 			],
 			"settings": {
@@ -1113,13 +1102,6 @@
 			}
 		},
 		{
-			"scope": "keyword.control",
-			"settings": {
-				"fontStyle": "",
-				"foreground": "#ff7e00"
-			}
-		},
-		{
 			"scope": "keyword.operator",
 			"settings": {
 				"foreground": "#ffff7e"
@@ -1283,7 +1265,6 @@
 				"keyword.operator.comparison",
 				"constant.language.infinity",
 				"keyword.operator.expression.typeof",
-				"keyword.operator.expression.in",
 				"keyword.operator.expression.instanceof",
 				"keyword.operator.expression.is"
 			],
@@ -1429,13 +1410,6 @@
 			}
 		},
 		{
-			"scope": "support.function",
-			"settings": {
-				"foreground": "#BFBFFF",
-				"fontStyle": "italic bold"
-			}
-		},
-		{
 			"scope": "support.function.dom",
 			"settings": {
 				"foreground": "#FF4848",
@@ -1573,6 +1547,38 @@
 			"settings": {
 				"foreground": "#23ab6c",
 				"fontStyle": "bold"
+			}
+		},
+		{
+			"scope": "keyword.operator.expression.in.js",
+			"settings": {
+				"foreground": "#FF7FFF",
+				"fontStyle": "bold"
+			}
+		},
+		{
+			"scope": "keyword.operator.expression.of.js",
+			"settings": {
+				"foreground": "#FF7FFF",
+				"fontStyle": "bold"
+			}
+		},
+		{
+			"scope": "storage.type.class",
+			"settings": {
+				"foreground": "#23ab6c",
+				"fontStyle": "bold"
+			}
+		},
+		{
+			"scope": [
+				"support.function",
+				"keyword.control",
+				"support.class.promise"
+			],
+			"settings": {
+				"foreground": "#FF3B3B",
+				"fontStyle": ""
 			}
 		}
 	]
