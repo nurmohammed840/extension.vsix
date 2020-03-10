@@ -10,11 +10,11 @@
 		"activityBarBadge.foreground": "#000000",
 		"badge.background": "#00000030",
 		"badge.foreground": "#464b5d",
-		"breadcrumb.activeSelectionForeground": "#80cbc4",
+		"breadcrumb.activeSelectionForeground": "#ffffff",
 		"breadcrumb.background": "#000000",
-		"breadcrumb.focusForeground": "#8f93a2",
-		"breadcrumb.foreground": "#525975",
-		"breadcrumbPicker.background": "#0f111a",
+		"breadcrumb.focusForeground": "#ffffff",
+		"breadcrumb.foreground": "#c692fa",
+		"breadcrumbPicker.background": "#000000",
 		"button.background": "#717cb450",
 		"button.hoverBackground": "#77777727",
 		"debugToolBar.background": "#000000",
@@ -52,7 +52,7 @@
 		"editorLineNumber.foreground": "#3b3f5180",
 		"editorLink.activeForeground": "#8f93a2",
 		"editorMarkerNavigation.background": "#8f93a205",
-		"editorOverviewRuler.border": "#0f111a",
+		"editorOverviewRuler.border": "#000",
 		"editorOverviewRuler.errorForeground": "#ff537040",
 		"editorOverviewRuler.findMatchForeground": "#80cbc4",
 		"editorOverviewRuler.infoForeground": "#82aaff40",
@@ -152,12 +152,12 @@
 		"sideBarSectionHeader.border": "#0f111a60",
 		"sideBarTitle.foreground": "#8f93a2",
 		"statusBar.background": "#000000",
-		"statusBar.border": "#0f111a60",
+		"statusBar.border": "#000",
 		"statusBar.debuggingBackground": "#000000",
 		"statusBar.debuggingForeground": "#7e7e7e",
-		"statusBar.foreground": "#4b526d",
+		"statusBar.foreground": "#00ffff",
 		"statusBar.noFolderBackground": "#0f111a",
-		"statusBarItem.hoverBackground": "#464b5d20",
+		"statusBarItem.hoverBackground": "#01fdfd1a",
 		"statusBarItem.remoteBackground": "#80cbc4",
 		"statusBarItem.remoteForeground": "#000000",
 		"tab.activeBorder": "#000000",
@@ -165,7 +165,7 @@
 		"tab.activeModifiedBorder": "#525975",
 		"tab.border": "#000000",
 		"tab.inactiveBackground": "#000000",
-		"tab.inactiveForeground": "#525975",
+		"tab.inactiveForeground": "#777",
 		"tab.unfocusedActiveBorder": "#464b5d",
 		"tab.unfocusedActiveForeground": "#8f93a2",
 		"terminal.ansiBlack": "#000000",
@@ -190,7 +190,7 @@
 		"textLink.activeForeground": "#8f93a2",
 		"textLink.foreground": "#80cbc4",
 		"titleBar.activeBackground": "#000000",
-		"titleBar.activeForeground": "#8f93a2",
+		"titleBar.activeForeground": "#00ff62b9",
 		"titleBar.border": "#000000",
 		"titleBar.inactiveBackground": "#0f111a",
 		"titleBar.inactiveForeground": "#525975",
@@ -1580,6 +1580,13 @@
 				"foreground": "#FF3B3B",
 				"fontStyle": ""
 			}
-		}
+		},
+		{
+                    "scope": "storage.modifier.async",
+                    "settings": {
+                        "foreground": "#c875ff",
+                        "fontStyle": "bold"
+                    }
+        }
 	]
 }
