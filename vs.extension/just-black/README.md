@@ -1,6 +1,6 @@
 # Dark mode for vs code
 
-This drak theme was desine spacifely for syntax highlighting . ( Javascript/Typescript )
+This drak theme was desine spacifely for syntax highlighting . ( Javascript/Typescript, JSX )
 
 ## Info
 
@@ -10,10 +10,11 @@ created on November,2019
 
 ### Note
 
-Because of new version Make sure  <code>"editor.semanticHighlighting.enabled": false </code>
+Because of new version Make sure <code>"editor.semanticHighlighting.enabled": false </code>
 
 ### Do you like it !?
 
-There are no dark theme as simple . I am not satisfied , So I create one.</br></br>
-There are no theme that need to satisfied everyone. </br>
-So you shoud modified (theme/syntax highlight) as your need.
+If you are from different Programing language ,Please update the Theme Schema( Becouse It's only Support JavaScript)</br>
+So you shoud modify some (theme/syntax highlight) as your need.</br></br>
+Any suggestions OR report issue on <a href="https://github.com/nurmohammed840/achievement">GitHub</a></br>
+Also Fork It,So that others will benefit too...</br>

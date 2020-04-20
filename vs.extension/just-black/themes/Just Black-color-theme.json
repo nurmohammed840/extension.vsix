@@ -1621,6 +1621,61 @@
 			"settings": {
 				"foreground": "#FFB648"
 			}
+		},
+		{
+			"scope": [
+				"support.type.object.module",
+				"keyword.control.default",
+				"keyword.control.export"
+			],
+			"settings": {
+				"foreground": "#FF7700",
+				"fontStyle": ""
+			}
+		},
+		{
+			"scope": "meta.jsx.children",
+			"settings": {
+				"foreground": "#FF7777",
+				"fontStyle": ""
+			}
+		},
+		{
+			"scope": "variable.object.property",
+			"settings": {
+				"foreground": "#C792EA",
+				"fontStyle": ""
+			}
+		},
+		{
+			"scope": "punctuation.destructuring",
+			"settings": {
+				"foreground": "#00FFFF",
+				"fontStyle": "bold"
+			}
+		},
+		{
+			"scope": "punctuation.separator.key-value",
+			"settings": {
+				"foreground": "#C792EA",
+				"fontStyle": ""
+			}
+		},
+		{
+			"scope": "punctuation.separator.comma",
+			"settings": {
+				"foreground": "#FFFFFF",
+				"fontStyle": ""
+			}
+		},
+		{
+			"scope": [
+				"keyword.control.as"
+			],
+			"settings": {
+				"foreground": "#00FFFF",
+				"fontStyle": ""
+			}
 		}
 	]
 }
