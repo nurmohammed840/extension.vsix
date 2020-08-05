@@ -1,8 +1,8 @@
 {
   "name": "just-black",
   "displayName": "Just Black",
-  "description": "Dark Theme With Great Syntax Highlighter!",
-  "version": "2.9.3",
+  "description": "Dark Theme With Syntax Highlighter!",
+  "version": "2.9.4",
   "publisher": "Nur",
   "engines": {
     "vscode": "^1.40.0"
@@ -25,7 +25,7 @@
       {
         "label": "Just Black",
         "uiTheme": "vs-dark",
-        "path": "./themes/Just Black-color-theme.json"
+        "path": "./themes/JustBlack.json"
       }
     ]
   }
