@@ -2,30 +2,30 @@
   "name": "just-black",
   "displayName": "Just Black",
   "description": "Dark Theme With Syntax Highlighter!",
-  "version": "2.9.5",
+  "version": "2.9.6",
   "publisher": "Nur",
   "engines": {
     "vscode": "^1.40.0"
   },
-  "icon": "justblack.png",
+  "icon": "JustBlack.png",
   "categories": [
     "Themes"
   ],
   "keywords": [
     "dark",
-    "justblack",
+    "black",
     "theme"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nurmohammed840/VSC.ext/tree/master/just-black"
+    "url": "https://github.com/nurmohammed840/VSC.ext/tree/master/JustBlack"
   },
   "contributes": {
     "themes": [
       {
         "label": "Just Black",
         "uiTheme": "vs-dark",
-        "path": "./themes/JustBlack.json"
+        "path": "./JustBlack.json"
       }
     ]
   }
