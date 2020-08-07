@@ -135,16 +135,16 @@
     "settings.checkboxBackground": "#0f111a",
     "settings.checkboxForeground": "#8f93a2",
     "settings.dropdownBackground": "#000000",
-    "settings.dropdownForeground": "#ae00ff",
+    "settings.dropdownForeground": "#ff7700",
     "settings.dropdownListBorder": "#000000",
     "settings.headerForeground": "#80cbc4",
-    "settings.modifiedItemIndicator": "#00ff00",
+    "settings.modifiedItemIndicator": "#00ffff",
     "settings.numberInputBackground": "#000000",
     "settings.numberInputBorder": "#000000",
     "settings.numberInputForeground": "#ffff00",
     "settings.textInputBackground": "#000000",
     "settings.textInputBorder": "#000000",
-    "settings.textInputForeground": "#ff00ff",
+    "settings.textInputForeground": "#00ff00",
     "sideBar.background": "#000000",
     "sideBar.border": "#20474b",
     "sideBar.foreground": "#525975",
@@ -1767,6 +1767,24 @@
       "scope": "storage.modifier",
       "settings": {
         "foreground": "#FF7777"
+      }
+    },
+    {
+      "scope": "constant.language.infinity",
+      "settings": {
+        "foreground": "#FFFF00",
+        "fontStyle": ""
+      }
+    },
+    {
+      "scope": [
+        "constant.language.undefined",
+        "keyword.operator.expression.void",
+        "constant.language.null"
+      ],
+      "settings": {
+        "foreground": "#B4B4B4",
+        "fontStyle": ""
       }
     }
   ]
