@@ -1,9 +1,11 @@
+/// <reference path="e:/git/VSC.ext/script/global.d.ts" />
 Object.assign(globalThis, require('vscode'));
 let fs = require("fs");
 let { writeFile } = require("./utils");
 
-let example = `// reload window after edit...
+let example = `/// <reference path="${extensions.getExtension("nur.script").extensionPath.replace(/\\/g, "/")}/global.d.ts" />
 // API - https://code.visualstudio.com/api/references/vscode-api 
+// reload window after edit...
 
 window.showInformationMessage('Hello World!');
 `
@@ -24,7 +26,7 @@ try {
 	};
 } catch (err) {
 	if (err?.code == "MODULE_NOT_FOUND")
-		window.showInformationMessage("Want to create a Script?", "Cancel", "Create")
+		window.showInformationMessage("Want to create a Script?", "Create", "Later")
 			.then(is => is == "Create" ? writeFile(main, example) : Promise.reject())
 			.then(() => workspace.openTextDocument(Uri.file(main)))
 			.then(doc => window.showTextDocument(doc))

@@ -8,11 +8,11 @@ We want to run this script. path `${workspace}/.vscode/script.js`
 
 ```js 
 // script.js
-// All VSCode API used globaly.So you don't need to import * vscode from 'vscode';
+// Visual-Studio-Code API used globaly.
 
 function activate(context) {
      // This line of code will only be executed once when your script is activated
-		window.showInformationMessage('Hello World!');
+	window.showInformationMessage('Hello World!');
 }
 // this method is called when your extension is deactivated
 function deactivate() {}
@@ -31,13 +31,8 @@ module.exports = {
  - Reload Window. 
 
 ## Script Settings
-
-```json
-{
-    "script.path" : "C:/Test", // always resolve file from this folder. Default `${workspace}/.vscode`
-    "script.main" : "script", // Name of the main file to run.eg : index.js, main.js ... 
-}
-```
+ - `script.path: string | ""` Always resolve file from this folder. Default `${workspace}/.vscode`.
+ - `script.main: string` Name of the main file to run.( index.js, main.js ... )
 
 ### For more information
 
