@@ -1,65 +1,46 @@
-# script README
+# Script
 
-This is the README for your extension "script". After writing up a brief description, we recommend including the following sections.
+Is a extension that allow you to run Visual-Studio-Code API as a script.
 
-## Features
+## Example
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+We want to run this script. path `${workspace}/.vscode/script.js`
 
-For example if there is an image subfolder under your extension project workspace:
+```js // script.js
+// All VSCode API used globaly.So you don't need to import * vscode from 'vscode';
 
-\!\[feature X\]\(images/feature-x.png\)
+function activate(context) {
+     // This line of code will only be executed once when your script is activated
+		window.showInformationMessage('Hello World!');
+}
+// this method is called when your extension is deactivated
+function deactivate() {}
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+module.exports = {
+	activate,
+	deactivate
+}
+```
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+ - Install Extention.
+ - Create a folder named `.vscode` in your workspace.
+ - Create a file named `script.js` in `.vscode` folder. 
+ - Reload Window. 
 
-## Extension Settings
+## Script Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
+```json
+{
+    "script.path" : "C:/Test", // always resolve file from this folder. Default `${workspace}/.vscode`
+    "script.main" : "script", // Name of the main file to run.eg : index.js, main.js ... 
+}
+```
 
 ### For more information
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+* [Script Repository](https://github.com/nurmohammed840/VSC.ext/tree/master/script)
+* [Visual Studio Code's API](https://code.visualstudio.com/api/references/vscode-api)
 
-**Enjoy!**
+**Happy Hacking!**

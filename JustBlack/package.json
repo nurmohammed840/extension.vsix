@@ -7,7 +7,7 @@
   "engines": {
     "vscode": "^1.40.0"
   },
-  "icon": "JustBlack.png",
+  "icon": "img/logo.png",
   "categories": [
     "Themes"
   ],
