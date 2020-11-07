@@ -1,4 +1,3 @@
-/// <reference path="e:/git/VSC.ext/script/global.d.ts" />
 Object.assign(globalThis, require('vscode'));
 let fs = require("fs");
 let { writeFile } = require("./utils");
@@ -32,5 +31,5 @@ try {
 			.then(doc => window.showTextDocument(doc))
 			.catch(() => { });
 	else
-		window.showInformationMessage(err?.message);
+		window.showErrorMessage(err?.message);
 }
