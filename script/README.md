@@ -6,7 +6,8 @@ Is a extension that allow you to run Visual-Studio-Code API as a script.
 
 We want to run this script. path `${workspace}/.vscode/script.js`
 
-```js // script.js
+```js 
+// script.js
 // All VSCode API used globaly.So you don't need to import * vscode from 'vscode';
 
 function activate(context) {
