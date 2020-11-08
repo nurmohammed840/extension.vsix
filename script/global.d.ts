@@ -1,4 +1,5 @@
 import vsc from "vscode";
+import type vscode from "vscode";
 declare global {
     var env: typeof vsc.env
     var scm: typeof vsc.scm
@@ -10,5 +11,10 @@ declare global {
     var workspace: typeof vsc.workspace
     var languages: typeof vsc.languages
     var extensions: typeof vsc.extensions
-    var authentication: typeof vsc.authentication
-}
+    var authentication: typeof vsc.authentication;
+
+    var Uri: typeof vsc.Uri;
+    var StatusBarAlignment: typeof vsc.StatusBarAlignment;
+
+    type ExtensionContext = vscode.ExtensionContext
+};
