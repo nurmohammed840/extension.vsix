@@ -31,10 +31,8 @@ module.exports = { activate, deactivate }
 ## Use Cases
 
  1. Good number of extension slow down  editor...
- 2. Vscode powerby NodeJS, It isn't secure like a browser or [deno](https://github.com/denoland/deno)</br></br>
-
-So you can't relay on so many 3rd party extention.</br></br>
-
+ 2. Vscode powerby NodeJS, It isn't secure like a browser or [deno](https://github.com/denoland/deno)</br>
+So you can't relay on so many 3rd party extention.</br>
 This is a zero dependency module.There are many use cases,like run commend `onSave` event.</br>
 Good for your typescript compilation! :)
 
