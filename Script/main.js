@@ -84,12 +84,10 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 			// This is experimintel.
 			// So, Please improve this functionality...  
 			let onCloseCleaner = workspace.onDidCloseTextDocument(({ fileName }) => {
-				if (fileName.search(/config\.js/i) > -1) {
-					statusBarItem.text = " Script "
-					statusBarItem.color = "#0ff"
-					onSaveCleaner.dispose()
-					onCloseCleaner.dispose()
-				}
+				statusBarItem.text = " Script "
+				statusBarItem.color = "#0ff"
+				onSaveCleaner.dispose()
+				onCloseCleaner.dispose()
 			})
 		}
 		else {
