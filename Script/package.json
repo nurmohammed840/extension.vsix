@@ -1,6 +1,6 @@
 {
     "activationEvents": [
-        "*"
+        "onStartupFinished"
     ],
     "contributes": {
         "configuration": {

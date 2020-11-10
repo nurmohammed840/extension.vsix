@@ -31,7 +31,7 @@ module.exports = { activate, deactivate }
 ## Use Cases
 
 1st - Good number of extension slow down  editor...
-2nd - Node isn't secure like a browser or [deno](https://github.com/denoland/deno)</br></br>
+2nd - Vscode powerby NodeJS.It isn't secure like a browser or [deno](https://github.com/denoland/deno)</br></br>
 
 So you can't relay on so many 3rd party extention.</br></br>
 
@@ -42,6 +42,7 @@ Good for your typescript compilation! :)
 
 ### For more information
 
+* [Just Black](https://marketplace.visualstudio.com/items?itemName=nur.just-black)
 * [Script Repository](https://github.com/nurmohammed840/VSC.ext)
 * [Visual Studio Code's API](https://code.visualstudio.com/api/references/vscode-api)
 

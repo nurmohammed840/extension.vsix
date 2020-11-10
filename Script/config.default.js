@@ -23,21 +23,9 @@ module.exports = {
             "description": "Default path directory.Where Script Extention should check for default script and configration."
         }
 
+        //do not use `script.statusBarItem` command.
         if (!("commands" in contributes))
             contributes.commands = [];
-
-        let unique
-        for (const { command } of contributes.commands)
-            if (command == "script.statusBarItem") {
-                unique = true;
-                break;
-            }
-
-        if (unique)
-            contributes.commands.push({ // do not use `script.statusBarItem` command.
-                command: "script.statusBarItem",
-                title: "Quick Open Script"
-            })
 
         return { contributes, activationEvents }
     }

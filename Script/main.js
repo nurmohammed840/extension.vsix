@@ -1,6 +1,5 @@
 // Feel free to modify, If you break something.
 // Just Reinstall this extention. :)
-
 /// <reference path="./global.d.ts" />
 Object.assign(globalThis, require('vscode'))
 let { defaultConfig } = require('./config.default')
@@ -21,11 +20,11 @@ let activateSignal = deferred()
 let deactivateSignal = deferred()
 
 class Script {
-/**
- * Listen onActivate.
- * You can also use it to get `ExtensionContext`
- * @param {(ctx:ExtensionContext)=>void} fn
- */
+	/**
+	 * Listen onActivate.
+	 * You can also use it to get `ExtensionContext`
+	 * @param {(ctx:ExtensionContext)=>void} fn
+	 */
 	static onActivate(fn) {
 		return activateSignal.then(fn)
 	}
@@ -43,17 +42,16 @@ if (workspaceFolders)
 
 
 let quickPicker = window.createQuickPick()
-
 quickPicker.matchOnDescription = true
-quickPicker.items = [
-	{ label: "Configaration" },
-	...runingScript.map(({ path: description, name: label }) => ({ label, description })),
-]
+
 
 let cmd = commands.registerCommand("script.statusBarItem", () => {
 	quickPicker.show()
-
-	quickPicker.onDidAccept(() => {
+	quickPicker.items = [
+		{ label: "Configaration" },
+		...runingScript.map(({ path: description, name: label }) => ({ label, description })),
+	]
+	let onAcceptCleaner = quickPicker.onDidAccept(() => {
 		// this is not multiSelect,So selected item is the 1st of `quickPicker.selectedItems[]`.
 		let selected = quickPicker.selectedItems[0]
 		if (selected.label == "Configaration") {
@@ -67,7 +65,7 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 				setTimeout(() => statusBarItem.text = "Loding config.", 250)
 				setTimeout(() => statusBarItem.text = "Loding config..", 500)
 				setTimeout(() => statusBarItem.text = "Loding config...", 750)
-				setTimeout(() => statusBarItem.text = "Script", 1000)
+				setTimeout(() => statusBarItem.text = " Script ", 1000)
 				try {
 					let config = require(path)
 					let modifiedConfig = defaultConfig(config)
@@ -94,13 +92,14 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 			let path = quickPicker.selectedItems[0].description
 			openTextFile(path)
 		}
-		quickPicker.hide()
-	}).dispose()
+		quickPicker.hide();
+		onAcceptCleaner.dispose() // clean after finished 
+	})
 })
 
 let statusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 10000)
 
-statusBarItem.text = "Script  "
+statusBarItem.text = " Script "
 statusBarItem.color = "#0ff"
 statusBarItem.command = "script.statusBarItem"
 statusBarItem.show()
