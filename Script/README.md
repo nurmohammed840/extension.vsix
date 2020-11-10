@@ -26,12 +26,12 @@ module.exports = { activate, deactivate }
  - Reload Window. 
 
 ## Script Settings
- - `script.path: string | null"`: Default path directory.Where Script Extention should check for default script and configration.
+ - `script.path: string | null`: Default path directory.Where Script Extention should check for default script and configration.
 
 ## Use Cases
 
-1st - Good number of extension slow down  editor...
-2nd - Vscode powerby NodeJS.It isn't secure like a browser or [deno](https://github.com/denoland/deno)</br></br>
+ 1. Good number of extension slow down  editor...
+ 2. Vscode powerby NodeJS, It isn't secure like a browser or [deno](https://github.com/denoland/deno)</br></br>
 
 So you can't relay on so many 3rd party extention.</br></br>
 
