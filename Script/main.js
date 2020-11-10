@@ -55,7 +55,7 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 		else
 			// this is the path of script file
 			// this is not multiSelect,So selected item is the 1st of `quickPicker.selectedItems[]`.
-			openTextFile(quickPicker.selectedItems[0].description)
+			openTextFile(selected.description)
 
 		quickPicker.hide();
 		onAcceptCleaner.dispose() // clean after finished 
