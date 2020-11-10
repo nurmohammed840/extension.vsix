@@ -1,9 +1,9 @@
 # Change Log
 
-### [0.0.3] - 2020-11-10 
+### [0.0.5] - 2020-11-10 
 - fix: Some minor issues.
 - refactor: modular system.
-- added: Configaration file (`config.js`)
+- added: Configaration file 
 - refactor and build: Rewrite whole `Script` extension!
 - remove: `script.main`,From now script name must be `main.js`. (breaking change)
 

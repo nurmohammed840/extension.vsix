@@ -2,15 +2,14 @@
 // Just Reinstall this extention. :)
 /// <reference path="./global.d.ts" />
 Object.assign(globalThis, require('vscode'))
-let { defaultConfig } = require('./config.default')
-let { writeFile, checkFileOrDirectory, deferred, readJson } = require("./utils")
+let { writeFile, checkFileOrDirectory, deferred } = require("./utils")
 
 let { workspaceFolders } = workspace
 let { path } = workspace.getConfiguration("script")
 let { extensionPath } = extensions.getExtension("nur.script")
 /** runingScript : {path:string,name:string}[] */
 /** scriptFiles : script[] */
-let runingScript = [], scriptFiles = []
+let runingScript = [], scriptFiles = [];
 
 let printErr = (err) => window.showErrorMessage(err?.message)
 let openTextFile = (path) => workspace.openTextDocument(Uri.file(path)).then(window.showTextDocument)
@@ -40,13 +39,8 @@ if (workspaceFolders)
 	for (let folder of workspaceFolders)
 		addScript(folder.uri.fsPath, folder.name)
 
-
 let quickPicker = window.createQuickPick()
 quickPicker.matchOnDescription = true
-
-
-
-
 
 let cmd = commands.registerCommand("script.statusBarItem", () => {
 	quickPicker.show()
@@ -55,46 +49,14 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 		...runingScript.map(({ path: description, name: label }) => ({ label, description })),
 	]
 	let onAcceptCleaner = quickPicker.onDidAccept(() => {
-		// this is not multiSelect,So selected item is the 1st of `quickPicker.selectedItems[]`.
 		let selected = quickPicker.selectedItems[0]
-		if (selected.label == "Configaration") {
-			statusBarItem.text = "Watching config"
-			let path = extensionPath + "\\config.js"
-			let packageJsonPath = extensionPath + "\\package.json"
-
-			openTextFile(path)
-			statusBarItem.color = "#777"
-
-			let onSaveCleaner = workspace.onDidSaveTextDocument(async function saveConfig() {
-				setTimeout(() => statusBarItem.text = "Loding config")
-				setTimeout(() => statusBarItem.text = "Loding config.", 250)
-				setTimeout(() => statusBarItem.text = "Loding config..", 500)
-				setTimeout(() => statusBarItem.text = "Loding config...", 750)
-				setTimeout(() => statusBarItem.text = "Watching config", 1000)
-				try {
-					let config = require(path)
-					let modifiedConfig = defaultConfig(config)
-					let packageJson = await readJson(packageJsonPath)
-					let modifiedPackageJson = Object.assign(packageJson, modifiedConfig)
-					await writeFile(packageJsonPath, JSON.stringify(modifiedPackageJson))
-				} catch (err) { printErr(err) }
-			})
-			// watch config file. Untill this file is been closed... 
-			// Once config file closed then clear all event listener!
-			// This is experimintel.
-			// So, Please improve this functionality...  
-			let onCloseCleaner = workspace.onDidCloseTextDocument(({ fileName }) => {
-				statusBarItem.text = " Script "
-				statusBarItem.color = "#0ff"
-				onSaveCleaner.dispose()
-				onCloseCleaner.dispose()
-			})
-		}
-		else {
+		if (selected.label == "Configaration")
+			openTextFile(extensionPath + "\\package.json")
+		else
 			// this is the path of script file
-			let path = quickPicker.selectedItems[0].description
-			openTextFile(path)
-		}
+			// this is not multiSelect,So selected item is the 1st of `quickPicker.selectedItems[]`.
+			openTextFile(quickPicker.selectedItems[0].description)
+
 		quickPicker.hide();
 		onAcceptCleaner.dispose() // clean after finished 
 	})
@@ -163,7 +125,6 @@ Promise.allSettled(scriptFiles).then((resolvedScripts) => {
 			} catch (err) { window.showErrorMessage(err?.message) }
 		}
 })
-
 
 let example = `/// <reference path="${extensionPath.replace(/\\/g, "/")}/global.d.ts" />
 // API - https://code.visualstudio.com/api/references/vscode-api 

@@ -10,14 +10,6 @@ module.exports = {
 			fs.writeFile(filename, data, (err) => err ? rej(err) : res())
 		})
 	},
-	readJson(path) {
-		return new Promise((res, rej) => {
-			fs.readFile(path, (err, data) => {
-				if (err) return rej(err);
-				try { res(JSON.parse(data)) } catch (err) { rej(err) }
-			})
-		})
-	},
 	/**
 	 * ```
 	 * if file or directory not found:

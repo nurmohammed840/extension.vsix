@@ -21,17 +21,17 @@
     },
     "main": "./main.js",
     "name": "script",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "publisher": "Nur",
     "icon": "logo.png",
     "displayName": "Script",
+    "engines": {
+        "vscode": "^1.51.0"
+    },
     "description": "Run VSCode API as script.",
     "categories": [
         "Other"
     ],
-    "engines": {
-        "vscode": "^1.51.0"
-    },
     "repository": {
         "type": "git",
         "url": "https://github.com/nurmohammed840/VSC.ext"
