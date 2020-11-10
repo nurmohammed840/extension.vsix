@@ -45,21 +45,7 @@ let quickPicker = window.createQuickPick()
 quickPicker.matchOnDescription = true
 
 
-async function saveConfig() {
-	setTimeout(() => statusBarItem.text = "Loding config")
-	setTimeout(() => statusBarItem.text = "Loding config.", 250)
-	setTimeout(() => statusBarItem.text = "Loding config..", 500)
-	setTimeout(() => statusBarItem.text = "Loding config...", 750)
-	setTimeout(() => statusBarItem.text = " Script ", 1000)
-	try {
-		let config = require(path)
-		let modifiedConfig = defaultConfig(config)
-		let packageJson = await readJson(packageJsonPath)
-		let modifiedPackageJson = Object.assign(packageJson, modifiedConfig)
 
-		await writeFile(packageJsonPath, JSON.stringify(modifiedPackageJson))
-	} catch (err) { printErr(err) }
-}
 
 
 let cmd = commands.registerCommand("script.statusBarItem", () => {
@@ -78,7 +64,20 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 			openTextFile(path)
 			statusBarItem.color = "#777"
 
-			let onSaveCleaner = workspace.onDidSaveTextDocument(saveConfig)
+			let onSaveCleaner = workspace.onDidSaveTextDocument(async function saveConfig() {
+				setTimeout(() => statusBarItem.text = "Loding config")
+				setTimeout(() => statusBarItem.text = "Loding config.", 250)
+				setTimeout(() => statusBarItem.text = "Loding config..", 500)
+				setTimeout(() => statusBarItem.text = "Loding config...", 750)
+				setTimeout(() => statusBarItem.text = " Script ", 1000)
+				try {
+					let config = require(path)
+					let modifiedConfig = defaultConfig(config)
+					let packageJson = await readJson(packageJsonPath)
+					let modifiedPackageJson = Object.assign(packageJson, modifiedConfig)
+					await writeFile(packageJsonPath, JSON.stringify(modifiedPackageJson))
+				} catch (err) { printErr(err) }
+			})
 			// watch config file. Untill this file is been closed... 
 			// Once config file closed then clear all event listener!
 			// This is experimintel.
