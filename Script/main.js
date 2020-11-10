@@ -58,6 +58,7 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 		// this is not multiSelect,So selected item is the 1st of `quickPicker.selectedItems[]`.
 		let selected = quickPicker.selectedItems[0]
 		if (selected.label == "Configaration") {
+			statusBarItem.text = "Watching config"
 			let path = extensionPath + "\\config.js"
 			let packageJsonPath = extensionPath + "\\package.json"
 
@@ -69,7 +70,7 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 				setTimeout(() => statusBarItem.text = "Loding config.", 250)
 				setTimeout(() => statusBarItem.text = "Loding config..", 500)
 				setTimeout(() => statusBarItem.text = "Loding config...", 750)
-				setTimeout(() => statusBarItem.text = " Script ", 1000)
+				setTimeout(() => statusBarItem.text = "Watching config", 1000)
 				try {
 					let config = require(path)
 					let modifiedConfig = defaultConfig(config)
@@ -84,6 +85,7 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 			// So, Please improve this functionality...  
 			let onCloseCleaner = workspace.onDidCloseTextDocument(({ fileName }) => {
 				if (fileName.search(/config\.js/i) > -1) {
+					statusBarItem.text = " Script "
 					statusBarItem.color = "#0ff"
 					onSaveCleaner.dispose()
 					onCloseCleaner.dispose()
