@@ -42,7 +42,7 @@ Good for your typescript compilation! :)
 
 ### For more information
 
-* [Script Repository](https://github.com/nurmohammed840/VSC.ext/tree/master/script)
+* [Script Repository](https://github.com/nurmohammed840/VSC.ext)
 * [Visual Studio Code's API](https://code.visualstudio.com/api/references/vscode-api)
 
 **Happy Hacking!**
