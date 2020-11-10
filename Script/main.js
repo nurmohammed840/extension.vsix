@@ -13,7 +13,7 @@ let runingScript = [], scriptFiles = [];
 
 let printErr = (err) => window.showErrorMessage(err?.message)
 let openTextFile = (path) => workspace.openTextDocument(Uri.file(path)).then(window.showTextDocument)
-let addScript = (directory, workspaceName) => scriptFiles.push(checkFileOrDirectory(directory + "\\.vscode\\main.js", workspaceName))
+let addScript = (directory, workspaceName) => scriptFiles.push(checkFileOrDirectory(directory + "\\main.js", workspaceName))
 
 let activateSignal = deferred()
 let deactivateSignal = deferred()
@@ -37,7 +37,7 @@ path && addScript(path, "Default")
 
 if (workspaceFolders)
 	for (let folder of workspaceFolders)
-		addScript(folder.uri.fsPath, folder.name)
+		addScript(folder.uri.fsPath + "\\.vscode", folder.name)
 
 let quickPicker = window.createQuickPick()
 quickPicker.matchOnDescription = true
