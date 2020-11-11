@@ -101,7 +101,7 @@ Promise.allSettled(scriptFiles).then((resolvedScripts) => {
 				let stats = await checkFileOrDirectory(dir, workspaceName)
 
 				if (stats.isDirectory()) {
-					let is = await window.showInformationMessage(`Want to create a script for ${workspaceName}?\n ${path}`, "Create", "Later")
+					let is = await window.showInformationMessage(`Want to create a script for ${workspaceName}?\n\n  ${path}`, "Create", "Later")
 					if (is == "Later")
 						return ctx.workspaceState.update("ignoreScripts", [...ignoreScripts, path])
 					if (is == "Create") {
