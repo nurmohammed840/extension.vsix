@@ -1,5 +1,12 @@
 # Change Log
 
+### [0.0.7] - 2020-12-23
+- fix: many bugs.
+- added: Output system.
+- API: `let ctx = await Context` get Application Context.
+- API: `printLn('msg')` and `print('msg')` for output data.
+- API: `Script.output(method: 'show'|'hide'|'clear')` for show , hide and clear Output.
+
 ### [0.0.5] - 2020-11-10 
 - fix: Some minor issues.
 - refactor: modular system.

@@ -1,57 +1,84 @@
 // Feel free to modify, If you break something.
 // Just Reinstall this extention. :)
 /// <reference path="./global.d.ts" />
-Object.assign(globalThis, require('vscode'))
-let { writeFile, checkFileOrDirectory, deferred } = require("./utils")
+Object.assign(globalThis, require('vscode'));
+const
+	fs = require("fs").promises,
+	util = require("util"),
+	{ join, dirname } = require("path"),
+	{ workspaceFolders } = workspace,
+	{ extensionPath } = extensions.getExtension("nur.script"),
+	defaultPath = workspace.getConfiguration("script").get("path"),
+	outputChannel = window.createOutputChannel("Script"),
+	openTextFile = (...filePath) => workspace.openTextDocument(Uri.file(join(...filePath))).then(window.showTextDocument),
+	/** runingScript : {path:string,name:string}[] */
+	/** scriptFiles : Promice<{path:string,workspaceName:string}[]> */
+	runingScript = [], scriptFiles = [];
 
-let { workspaceFolders } = workspace
-let { path } = workspace.getConfiguration("script")
-let { extensionPath } = extensions.getExtension("nur.script")
-/** runingScript : {path:string,name:string}[] */
-/** scriptFiles : script[] */
-let runingScript = [], scriptFiles = [];
-
-let printErr = (err) => window.showErrorMessage(err?.message)
-let openTextFile = (path) => workspace.openTextDocument(Uri.file(path)).then(window.showTextDocument)
-let addScript = (directory, workspaceName) => scriptFiles.push(checkFileOrDirectory(directory + "\\main.js", workspaceName))
-
-let activateSignal = deferred()
-let deactivateSignal = deferred()
-
-class Script {
-	/**
-	 * Listen onActivate.
-	 * You can also use it to get `ExtensionContext`
-	 * @param {(ctx:ExtensionContext)=>void} fn
-	 */
-	static onActivate(fn) {
+function printErr(err) {
+	outputChannel.appendLine("\n" + util.inspect(err));
+	window.showErrorMessage(err?.message);
+}
+function deferred() {
+	let methods;
+	const promise = new Promise((resolve, reject) => {
+		methods = { resolve, reject };
+	});
+	return Object.assign(promise, methods);
+}
+function addScript(name, ...directorys) {
+	let path = join(...directorys, "main.js");
+	let promise = fs.stat(path)
+		.then(stats => ({ path, name, stats }))
+		.catch(() => Promise.reject({ path, name }));
+	scriptFiles.push(promise);
+}
+let activateSignal = deferred();
+let deactivateSignal = deferred();
+// --------------------------  API  ----------------------------------
+globalThis.Script = {
+	onActivate(fn) {
 		return activateSignal.then(fn)
-	}
-	static onDeactivate(fn) {
+	},
+	onDeactivate(fn) {
 		return deactivateSignal.then(fn)
+	},
+	output(method, option = false) {
+		method == "show" ? outputChannel.show(option) :
+			method == "clear" ? outputChannel.clear() :
+				method == "hide" ? outputChannel.hide() : null
 	}
 }
-globalThis.Script = Script
+globalThis.Context = deferred();
+globalThis.print = (data) => outputChannel.append(util.inspect(data));
+globalThis.printLn = (data) => outputChannel.appendLine(util.inspect(data))
+//-------------------------------------------------------------------------------
 
-path && addScript(path, "Default")
+defaultPath && addScript("Default", defaultPath);
 
 if (workspaceFolders)
 	for (let folder of workspaceFolders)
-		addScript(folder.uri.fsPath + "\\.vscode", folder.name)
+		addScript(folder.name, folder.uri.fsPath, ".vscode")
 
 let quickPicker = window.createQuickPick()
 quickPicker.matchOnDescription = true
 
 let cmd = commands.registerCommand("script.statusBarItem", () => {
-	quickPicker.show()
+	quickPicker.show();
 	quickPicker.items = [
-		{ label: "Configaration" },
+		{ label: "Show Output" },
+		{ label: "Clear Output" },
+		{ label: "Open Config File" },
 		...runingScript.map(({ path: description, name: label }) => ({ label, description })),
 	]
 	let onAcceptCleaner = quickPicker.onDidAccept(() => {
 		let selected = quickPicker.selectedItems[0]
-		if (selected.label == "Configaration")
-			openTextFile(extensionPath + "\\package.json")
+		if (selected.label == "Open Config File")
+			openTextFile(extensionPath, "package.json")
+		else if (selected.label == "Show Output")
+			outputChannel.show(false)
+		else if (selected.label == "Clear Output")
+			outputChannel.clear()
 		else
 			// this is the path of script file
 			// this is not multiSelect,So selected item is the 1st of `quickPicker.selectedItems[]`.
@@ -71,62 +98,56 @@ statusBarItem.show()
 
 module.exports = {
 	activate(ctx) {
+		Context.resolve(ctx)
 		activateSignal.resolve(ctx)
 		ctx.subscriptions.push(cmd)
 	},
 	deactivate() {
-		deactivateSignal.resolve()
-		statusBarItem.dispose()
+		deactivateSignal.resolve();
+		statusBarItem.dispose();
+		outputChannel.dispose();
 	}
 }
 
-Promise.allSettled(scriptFiles).then((resolvedScripts) => {
-	// when script file found = script { fs.stats, path, workspaceName }
-	// 		then await for activation & deactivation signal
-	//
-	// when script file not found = reason { path, workspaceName } 
-	// 		then ask if user want to creact a script file
-	//  	     if Create & (!in `ignoreScripts`):
-	//				writeFile then  openTextFile
-	//			 else Later:
-	//				add script path to `ignoreScripts`					  
-	for (let { value: script, reason } of resolvedScripts)
-		if (reason?.path)
+Promise.allSettled(scriptFiles).then(resolvedScripts => {
+	/* when script file found = script { fs.stats, path, workspaceName }
+			then await for activation & deactivation signal
+	
+	when script file not found = reason { path, workspaceName } 
+			then ask if user want to creact a script file
+				 if 'Create' & (!in `ignoreScripts`):
+					writeFile then  openTextFile
+				  elif 'Later':
+					add script path to `ignoreScripts` */
+	for (const result of resolvedScripts)
+		if (result.status == "rejected")
 			Script.onActivate(async ctx => {
-				let { path, workspaceName } = reason
-				let dir = path.replace("main.js", "") // directory of script file.
-				let ignoreScripts = ctx.workspaceState.get("ignoreScripts") || []
+				let { path, name } = result.reason
+				let ignoreScripts = ctx.workspaceState.get("ignoreScripts") || [];
 				if (ignoreScripts.includes(path)) return
 
-				let stats = await checkFileOrDirectory(dir, workspaceName)
-
-				if (stats.isDirectory()) {
-					let is = await window.showInformationMessage(`Want to create a script for ${workspaceName}?\n\n  ${path}`, "Create", "Later")
-					if (is == "Later")
-						return ctx.workspaceState.update("ignoreScripts", [...ignoreScripts, path])
-					if (is == "Create") {
-						await writeFile(path, example)
-						openTextFile(path)
-					}
+				let is = await window.showInformationMessage(`Want to create a script for ${name}?\n\n\t${path}`, "Create", "Later")
+				if (is == "Later")
+					ctx.workspaceState.update("ignoreScripts", [...ignoreScripts, path])
+				if (is == "Create") {
+					await fs.mkdir(dirname(path), { recursive: true })
+					await fs.writeFile(path, example, { encoding: "utf-8" })
+					openTextFile(path);
 				}
-			}).catch(() => { })
+			}).catch(printErr)
+		else if (result.value.stats.isFile()) try {
+			let { path, name } = result.value;
+			runingScript.push({ path, name });
 
-		else if (script?.isFile()) {
-			try {
-				runingScript.push({ path: script.path, name: script.workspaceName })
-
-				let { activate, deactivate } = require(script.path)
-				typeof activate == "function" &&
-					Script.onActivate(activate).catch(printErr)
-
-				typeof activate == "function" &&
-					Script.onDeactivate(deactivate).catch(printErr)
-
-			} catch (err) { window.showErrorMessage(err?.message) }
-		}
+			let { activate, deactivate } = require(path);
+			typeof activate == "function" &&
+				Script.onActivate(activate).catch(printErr)
+			typeof activate == "function" &&
+				Script.onDeactivate(deactivate).catch(printErr)
+		} catch (err) { printErr(err) }
 })
 
-let example = `/// <reference path="${extensionPath.replace(/\\/g, "/")}/global.d.ts" />
+let example = `/// <reference path="${join(extensionPath, "global.d.ts").replace(/\\/g, "/")}" />
 // API - https://code.visualstudio.com/api/references/vscode-api 
 // reload window after edit...
 

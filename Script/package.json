@@ -13,7 +13,7 @@
                     ],
                     "scope": "resource",
                     "default": null,
-                    "description": "Default path directory.Where Script Extention should check for default script and configration."
+                    "description": "Default main script directory."
                 }
             },
             "title": "Script"
@@ -21,7 +21,7 @@
     },
     "main": "./main.js",
     "name": "script",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "publisher": "Nur",
     "icon": "logo.png",
     "displayName": "Script",

@@ -20,5 +20,20 @@ declare global {
     var Uri: typeof vsc.Uri;
     var StatusBarAlignment: typeof vsc.StatusBarAlignment;
 
-    type ExtensionContext = vscode.ExtensionContext
+    var Context: Promise<vscode.ExtensionContext>;
+    var Script: {
+        /**
+         * Listen onActivate.
+         * You can also use it to get `ExtensionContext`
+         */
+        onActivate: (fn: (ctx: vscode.ExtensionContext) => any) => Promise<any>,
+        /** This Event run when the Extention is deactivated */
+        onDeactivate: (fn: () => void) => void,
+        /** `show`, `hide` and `clear` ourput programmatically */
+        output: (method: 'show' | 'hide' | 'clear') => void
+    }
+    /** Print message to `output` */
+    function print(msg?: any): void;
+    /** Print to `Output` with newline. */
+    function printLn(msg?: any): void;
 };
