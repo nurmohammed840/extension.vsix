@@ -1,13 +1,11 @@
 # Script
-Vscode is one of the most powerful text-editor writen in typescript.
-
-Script is a zero dependencie extension that allow you to run Visual-Studio-Code API as a script.
+Script is a zero dependencie extension that allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) as a script.
 
 ## API
-All Visual-Studio-Code API used globaly.It also has some Api.
+All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) used globaly. It also has some Api.
 ```js
 // Vscode has no console.But has a Output system.
-printLn('Print to `Output` with newline.');
+println('Print to `Output` with newline.');
 print('Print message to `Output`');
 
 // get `ExtensionContext`
@@ -42,13 +40,10 @@ module.exports = { activate, deactivate }
 ## Script Settings
  - `script.path: string | null` : Default main script directory.
 
-
 ### For more information
 
 * [Just Black](https://marketplace.visualstudio.com/items?itemName=nur.just-black)
 * [Script Repository](https://github.com/nurmohammed840/VSC.ext)
 * [Visual Studio Code's API](https://code.visualstudio.com/api/references/vscode-api)
-
-Please Help me by collaboration, create new issue,Make some npm libirary for vscode api.
 
 **Happy Hacking!**

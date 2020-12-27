@@ -44,14 +44,14 @@ globalThis.Script = {
 		return deactivateSignal.then(fn)
 	},
 	output(method, option = false) {
-		method == "show" ? outputChannel.show(option) :
-			method == "clear" ? outputChannel.clear() :
-				method == "hide" ? outputChannel.hide() : null
+		if (method == "show") outputChannel.show(option)
+		else if (method == "clear") outputChannel.clear()
+		else if (method == "hide") outputChannel.hide()
 	}
 }
 globalThis.Context = deferred();
 globalThis.print = (data) => outputChannel.append(util.inspect(data));
-globalThis.printLn = (data) => outputChannel.appendLine(util.inspect(data))
+globalThis.println = (data) => outputChannel.appendLine(util.inspect(data))
 //-------------------------------------------------------------------------------
 
 defaultPath && addScript("Default", defaultPath);
@@ -60,17 +60,17 @@ if (workspaceFolders)
 	for (let folder of workspaceFolders)
 		addScript(folder.name, folder.uri.fsPath, ".vscode")
 
-let quickPicker = window.createQuickPick()
-quickPicker.matchOnDescription = true
+let quickPicker = window.createQuickPick();
+quickPicker.matchOnDescription = true;
 
 let cmd = commands.registerCommand("script.statusBarItem", () => {
-	quickPicker.show();
 	quickPicker.items = [
 		{ label: "Show Output" },
 		{ label: "Clear Output" },
 		{ label: "Open Config File" },
 		...runingScript.map(({ path: description, name: label }) => ({ label, description })),
 	]
+	quickPicker.show();
 	let onAcceptCleaner = quickPicker.onDidAccept(() => {
 		let selected = quickPicker.selectedItems[0]
 		if (selected.label == "Open Config File")
@@ -90,7 +90,6 @@ let cmd = commands.registerCommand("script.statusBarItem", () => {
 })
 
 let statusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 10000)
-
 statusBarItem.text = " Script "
 statusBarItem.color = "#0ff"
 statusBarItem.command = "script.statusBarItem"

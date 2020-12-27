@@ -4,7 +4,7 @@
 - fix: many bugs.
 - added: Output system.
 - API: `let ctx = await Context` get Application Context.
-- API: `printLn('msg')` and `print('msg')` for output data.
+- API: `println('msg')` and `print('msg')` for output data.
 - API: `Script.output(method: 'show'|'hide'|'clear')` for show , hide and clear Output.
 
 ### [0.0.5] - 2020-11-10 

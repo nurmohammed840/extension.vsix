@@ -35,5 +35,5 @@ declare global {
     /** Print message to `output` */
     function print(msg?: any): void;
     /** Print to `Output` with newline. */
-    function printLn(msg?: any): void;
+    function println(msg?: any): void;
 };
