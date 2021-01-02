@@ -3,17 +3,15 @@ Script is a zero dependencie extension that allow you to run [Visual-Studio-Code
 
 ## API
 All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) used globaly. It also has some Api.
-```js
-// Vscode has no console.But has a Output system.
-println('Print to `Output` with newline.');
-print('Print message to `Output`');
-
-// get `ExtensionContext`
-let ctx = await Context;
-
-// `show`, `hide` and `clear` output programmatically.
-Script.output("clear" || "hide" || "show");
-```
+- `print(msg:string): void`: Print message to Output.
+- `println(msg:string): void`: Print to Output with newline.
+- `Context`: get Promice.resolve(ExtensionContext).
+#### Script
+- `output(method: 'clear' | 'hide' | 'show')`: show, hide and clear output programmatically.
+- `picker(label: string, fn: () => void): cleanUp` : Add event to picker
+- `picker(scriptPickerOption: ScriptPickerOption): cleanUp` : Add event to picker
+- `onActivate(fn: (ctx: ExtensionContext) => any): Promise<any>` : Add event listener on extension activate.
+- `onDeactivate(fn: () => void)` : Add event listener on extension deactivate.
 
 ## Example
 

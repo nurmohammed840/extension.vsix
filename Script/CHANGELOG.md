@@ -1,5 +1,8 @@
 # Change Log
 
+### [0.1.0] - 2021-01-01
+- API: `Script.picker` added.
+
 ### [0.0.7] - 2020-12-23
 - fix: many bugs.
 - added: Output system.

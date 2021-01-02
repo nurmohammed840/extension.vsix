@@ -1,3 +1,4 @@
+//@ts-check
 // Feel free to modify, If you break something.
 // Just Reinstall this extention. :)
 /// <reference path="./global.d.ts" />
@@ -6,14 +7,12 @@ const
 	fs = require("fs").promises,
 	util = require("util"),
 	{ join, dirname } = require("path"),
-	{ workspaceFolders } = workspace,
 	{ extensionPath } = extensions.getExtension("nur.script"),
 	defaultPath = workspace.getConfiguration("script").get("path"),
 	outputChannel = window.createOutputChannel("Script"),
 	openTextFile = (...filePath) => workspace.openTextDocument(Uri.file(join(...filePath))).then(window.showTextDocument),
-	/** runingScript : {path:string,name:string}[] */
-	/** scriptFiles : Promice<{path:string,workspaceName:string}[]> */
-	runingScript = [], scriptFiles = [];
+	/** scriptFiles : Promice<{path:string,name:string}[]> */
+	scriptFiles = [];
 
 function printErr(err) {
 	outputChannel.appendLine("\n" + util.inspect(err));
@@ -33,15 +32,17 @@ function addScript(name, ...directorys) {
 		.catch(() => Promise.reject({ path, name }));
 	scriptFiles.push(promise);
 }
+// --------------------- Await For Activation ------------------------
 let activateSignal = deferred();
 let deactivateSignal = deferred();
 // --------------------------  API  ----------------------------------
+globalThis.Context = deferred();
 globalThis.Script = {
 	onActivate(fn) {
-		return activateSignal.then(fn)
+		return activateSignal.then(fn);
 	},
 	onDeactivate(fn) {
-		return deactivateSignal.then(fn)
+		return deactivateSignal.then(fn);
 	},
 	output(method, option = false) {
 		if (method == "show") outputChannel.show(option)
@@ -49,75 +50,87 @@ globalThis.Script = {
 		else if (method == "hide") outputChannel.hide()
 	}
 }
-globalThis.Context = deferred();
 globalThis.print = (data) => outputChannel.append(util.inspect(data));
 globalThis.println = (data) => outputChannel.appendLine(util.inspect(data))
-//-------------------------------------------------------------------------------
+//-------------------  Add Script Files (main.js) --------------------
 
 defaultPath && addScript("Default", defaultPath);
 
-if (workspaceFolders)
-	for (let folder of workspaceFolders)
-		addScript(folder.name, folder.uri.fsPath, ".vscode")
+if (workspace.workspaceFolders)
+	for (let folder of workspace.workspaceFolders)
+		addScript(folder.name, folder.uri.fsPath, ".vscode");
+//----------------------------- Quick Picker ------------------------
 
 let quickPicker = window.createQuickPick();
+const quickPickerItems = [
+	{ label: "Show Output", priority: 0, fn() { outputChannel.show(true) } },
+	{ label: "Clear Output", priority: 0, fn() { outputChannel.clear() } },
+	{ label: "Open Config File", priority: 0, fn() { openTextFile(extensionPath, "package.json") } },
+];
 quickPicker.matchOnDescription = true;
+// We are checking strictly.because user might use 'javascript'
+function picker(any, fn, priority = 0) {
+	const index = quickPickerItems.length;
+	if (typeof any == "string" && typeof fn == "function")
+		quickPickerItems.push({ label: any, priority, fn });
+	else if (typeof any == "object") {
+		let { label, priority, fn, busy, description, detail, alwaysShow } = any
+		if (typeof label == "string" && typeof fn == "function") {
+			const obj = { label, priority: priority ?? 0, fn }
+			typeof busy == "boolean" && (obj.busy = busy)
+			typeof detail == "string" && (obj.detail = detail)
+			typeof alwaysShow == "boolean" && (obj.alwaysShow = alwaysShow)
+			typeof description == "string" && (obj.description = description)
+			quickPickerItems.push(obj);
+		}
+	}
+	return () => quickPickerItems.splice(index, 1);
+}
+globalThis.Script.picker = picker // API
+quickPicker.onDidAccept(async () => {
+	try {
+		/**@type {any} */
+		let selected = quickPicker.activeItems[0];
+		quickPicker.placeholder = selected.label;
+		selected.priority++;
+		//@ts-ignore
+		if (selected.busy) quickPicker.busy = selected;
+		if (quickPicker.busy === false) quickPicker.hide();
+		await selected.fn();
+		//@ts-ignore
+		if (quickPicker.busy === selected) quickPicker.hide();
+	} catch (err) {
+		printErr(err);
+	}
+});
 
-let cmd = commands.registerCommand("script.statusBarItem", () => {
-	quickPicker.items = [
-		{ label: "Show Output" },
-		{ label: "Clear Output" },
-		{ label: "Open Config File" },
-		...runingScript.map(({ path: description, name: label }) => ({ label, description })),
-	]
+let cmd = commands.registerCommand("script.showPicker", () => {
+	quickPicker.items = quickPickerItems.sort((a, b) => a.priority > b.priority && -1);
+	quickPicker.busy = false;
 	quickPicker.show();
-	let onAcceptCleaner = quickPicker.onDidAccept(() => {
-		let selected = quickPicker.selectedItems[0]
-		if (selected.label == "Open Config File")
-			openTextFile(extensionPath, "package.json")
-		else if (selected.label == "Show Output")
-			outputChannel.show(false)
-		else if (selected.label == "Clear Output")
-			outputChannel.clear()
-		else
-			// this is the path of script file
-			// this is not multiSelect,So selected item is the 1st of `quickPicker.selectedItems[]`.
-			openTextFile(selected.description)
+});
 
-		quickPicker.hide();
-		onAcceptCleaner.dispose() // clean after finished 
-	})
-})
-
-let statusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 10000)
-statusBarItem.text = " Script "
-statusBarItem.color = "#0ff"
-statusBarItem.command = "script.statusBarItem"
-statusBarItem.show()
+let statusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 10000);
+statusBarItem.text = " Script ";
+statusBarItem.color = "#0ff";
+statusBarItem.command = "script.showPicker";
+statusBarItem.show();
 
 module.exports = {
 	activate(ctx) {
-		Context.resolve(ctx)
-		activateSignal.resolve(ctx)
-		ctx.subscriptions.push(cmd)
+		Context.resolve(ctx);
+		activateSignal.resolve(ctx);
 	},
 	deactivate() {
 		deactivateSignal.resolve();
 		statusBarItem.dispose();
 		outputChannel.dispose();
+		quickPicker.dispose();
+		cmd.dispose();
 	}
 }
 
 Promise.allSettled(scriptFiles).then(resolvedScripts => {
-	/* when script file found = script { fs.stats, path, workspaceName }
-			then await for activation & deactivation signal
-	
-	when script file not found = reason { path, workspaceName } 
-			then ask if user want to creact a script file
-				 if 'Create' & (!in `ignoreScripts`):
-					writeFile then  openTextFile
-				  elif 'Later':
-					add script path to `ignoreScripts` */
 	for (const result of resolvedScripts)
 		if (result.status == "rejected")
 			Script.onActivate(async ctx => {
@@ -136,7 +149,7 @@ Promise.allSettled(scriptFiles).then(resolvedScripts => {
 			}).catch(printErr)
 		else if (result.value.stats.isFile()) try {
 			let { path, name } = result.value;
-			runingScript.push({ path, name });
+			picker({ label: name, description: path, fn() { openTextFile(path) } })
 
 			let { activate, deactivate } = require(path);
 			typeof activate == "function" &&
