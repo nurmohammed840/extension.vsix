@@ -6,7 +6,7 @@ All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode
 - `print(msg:string): void`: Print message to Output.
 - `println(msg:string): void`: Print to Output with newline.
 - `Context`: get Promice.resolve(ExtensionContext).
-#### Script
+#### # Script namespace
 - `output(method: 'clear' | 'hide' | 'show')`: show, hide and clear output programmatically.
 - `picker(label: string, fn: () => void): cleanUp` : Add event to picker
 - `picker(scriptPickerOption: ScriptPickerOption): cleanUp` : Add event to picker
@@ -33,7 +33,7 @@ module.exports = { activate, deactivate }
 
  - Create a folder named `.vscode` in your workspace.
  - Create a file named `main.js` in `.vscode` folder. 
- - Reload Window. 
+ - `Reload Window` or `Restart Extension Host` after edit. 
 
 ## Script Settings
  - `script.path: string | null` : Default main script directory.
