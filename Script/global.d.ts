@@ -26,7 +26,7 @@ declare global {
         alwaysShow?: boolean
         description?: string
     }
-    var Context: Promise<ExtensionContext>;
+    const Context: Promise<ExtensionContext>;
     namespace Script {
         /**
          * Listen onActivate.
@@ -53,7 +53,7 @@ declare global {
     /**
      * The version of the editor.
      */
-    const version: string;
+    var version: string;
 
     /**
      * Represents a reference to a command. Provides a title which

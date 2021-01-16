@@ -2,7 +2,9 @@
 // Feel free to modify, If you break something.
 // Just Reinstall this extention. :)
 /// <reference path="./global.d.ts" />
-Object.assign(globalThis, require('vscode'));
+const vscode = require('vscode');
+Object.assign(globalThis, vscode);
+globalThis.vscode = vscode;
 const
 	util = require('util'),
 	path = require('path'),
