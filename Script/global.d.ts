@@ -17,12 +17,12 @@ import { Thenable } from "./thenable.d.ts";
 
 declare global {
     // -----------------------  API ---------------------------
-    interface ScriptPickerOption {
-        label: string
+    interface PickerOption {
         fn(): void
-        priority?: number
+        label: string
         busy?: boolean
         detail?: string
+        priority?: number
         alwaysShow?: boolean
         description?: string
     }
@@ -41,8 +41,8 @@ declare global {
         /** @returns Cleanup function */
         function picker(label: string, fn: () => void, priority = 0): () => void;
         /** @returns Cleanup function */
-        function picker(scriptPickerOption: ScriptPickerOption): () => void;
-        function picker(any: ScriptPickerOption | string, fn: () => void, priority = 0): () => void;
+        function picker(object: PickerOption): () => void;
+        function picker(any: PickerOption | string, fn: () => void, priority = 0): () => void;
     }
     /** Print message to `output` */
     function print(msg?: any): void;

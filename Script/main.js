@@ -1,7 +1,7 @@
-//@ts-check
+/// <reference path="./global.d.ts" />
+// @ts-check
 // Feel free to modify, If you break something.
 // Just Reinstall this extention. :)
-/// <reference path="./global.d.ts" />
 const vscode = require('vscode');
 Object.assign(globalThis, vscode);
 globalThis.vscode = vscode;
@@ -28,20 +28,18 @@ function printErr(err) {
 }
 function deferred() {
 	let methods;
-	const promise = new Promise((resolve, reject) => {
-		methods = { resolve, reject };
+	const promise = new Promise((resolve, _reject) => {
+		methods = { resolve };
 	});
 	return Object.assign(promise, methods);
 }
 function addScript(name, ...directorys) {
 	const filepath = path.join(...directorys, 'main.js');
-	const promise = fs
-		.stat(filepath)
-		.then((stats) => ({ filepath, name, stats }))
+	const promise = fs.stat(filepath)
+		.then(stats => ({ filepath, name, stats }))
 		.catch(() => Promise.reject({ filepath, name }));
 	scriptFiles.push(promise);
 }
-
 // ------------------------ Await For Signal -------------------------
 
 const activateSignal = deferred();
@@ -49,14 +47,10 @@ const deactivateSignal = deferred();
 
 // --------------------------  API  ----------------------------------
 // @ts-ignore
-globalThis.Context = deferred();
+globalThis.Context = activateSignal;
 globalThis.Script = {
-	onActivate(fn) {
-		return activateSignal.then(fn);
-	},
-	onDeactivate(fn) {
-		return deactivateSignal.then(fn);
-	},
+	onActivate: fn => activateSignal.then(fn),
+	onDeactivate: fn => deactivateSignal.then(fn),
 	output(method, option = false) {
 		if (method == 'show') outputChannel.show(option);
 		else if (method == 'hide') outputChannel.hide();
@@ -83,15 +77,37 @@ const quickPickerItems = [
 	{ label: 'Open Config File', priority: 0, fn() { openTextFile(extensionPath, 'package.json'); }, },
 ];
 quickPicker.matchOnDescription = true;
-// We are checking strictly.Because user might use 'javascript';
+quickPicker.onDidAccept(async () => {
+	try {
+	/**@type {PickerOption} */
+		// @ts-ignore
+		const selected = quickPicker.activeItems[0];
+		selected.priority++;
+		quickPicker.placeholder = selected.label;
+		// @ts-ignore
+		if (selected.busy) quickPicker.busy = selected;
+		if (quickPicker.busy === false) quickPicker.hide();
+		await selected.fn();
+		// @ts-ignore
+		if (quickPicker.busy === selected) quickPicker.hide();
+	} catch (err) {
+		printErr(err);
+	}
+});
+
+function showPicker() {
+	quickPicker.items = quickPickerItems.sort((a, b) => a.priority > b.priority && -1);
+	quickPicker.busy = false;
+	quickPicker.show();
+}
+// Checking strictly
 function picker(any, fn, priority = 0) {
-	const index = quickPickerItems.length;
 	if (typeof any == 'string' && typeof fn == 'function')
 		quickPickerItems.push({ label: any, priority, fn });
 	else if (typeof any == 'object') {
 		const { label, priority, fn, busy, description, detail, alwaysShow } = any;
 		if (typeof label == 'string' && typeof fn == 'function') {
-			const obj = { label, priority: priority ?? 0, fn };
+			const obj = { label, priority: typeof priority == "number" ? priority : 0, fn };
 			if (typeof busy == 'boolean') obj.busy = busy;
 			if (typeof detail == 'string') obj.detail = detail;
 			if (typeof alwaysShow == 'boolean') obj.alwaysShow = alwaysShow;
@@ -99,32 +115,8 @@ function picker(any, fn, priority = 0) {
 			quickPickerItems.push(obj);
 		}
 	}
-	return () => quickPickerItems.splice(index, 1);
+	return () => quickPickerItems.splice(quickPickerItems.length, 1);
 }
-async function quickPickerOnDidAccept() {
-	try {
-		/**@type {any} */
-		const selected = quickPicker.activeItems[0];
-		quickPicker.placeholder = selected.label;
-		selected.priority++;
-		//@ts-ignore
-		if (selected.busy) quickPicker.busy = selected;
-		if (quickPicker.busy === false) quickPicker.hide();
-		await selected.fn();
-		//@ts-ignore
-		if (quickPicker.busy === selected) quickPicker.hide();
-	} catch (err) {
-		printErr(err);
-	}
-}
-quickPicker.onDidAccept(quickPickerOnDidAccept);
-
-function showPicker() {
-	quickPicker.items = quickPickerItems.sort((a, b) => a.priority > b.priority && -1);
-	quickPicker.busy = false;
-	quickPicker.show();
-}
-
 picker.show = showPicker;
 picker.hide = () => quickPicker.hide();
 picker.onDidHide = quickPicker.onDidHide.bind(quickPicker);
@@ -147,7 +139,6 @@ statusBarItem.show();
 
 module.exports = {
 	activate(ctx) {
-		Context.resolve(ctx);
 		activateSignal.resolve(ctx);
 	},
 	deactivate() {
@@ -159,12 +150,13 @@ module.exports = {
 	},
 };
 
-Promise.allSettled(scriptFiles).then((resolvedScripts) => {
-	for (const result of resolvedScripts)
+Promise.allSettled(scriptFiles).then(settledScriptFiles => {
+	for (const result of settledScriptFiles)
 		if (result.status == 'rejected')
-			Script.onActivate(async (ctx) => {
+			activateSignal.then(async ctx => {
 				const { filepath, name } = result.reason;
 				const ignoreScripts = ctx.workspaceState.get('ignoreScripts') || [];
+
 				if (ignoreScripts.includes(filepath)) return;
 
 				const is = await window.showInformationMessage(`Want to create a script for ${name}?\n\n\t${filepath}`,
@@ -182,20 +174,19 @@ Promise.allSettled(scriptFiles).then((resolvedScripts) => {
 
 		else if (result.value.stats.isFile()) try {
 			const { filepath, name } = result.value;
+			const { activate, deactivate } = require(filepath);
 
 			picker({
 				label: name,
 				description: filepath,
-				fn() {
-					openTextFile(filepath);
-				}
+				fn: () => openTextFile(filepath)
 			});
 
-			const { activate, deactivate } = require(filepath);
 			if (typeof activate == 'function')
-				Script.onActivate(activate).catch(printErr);
+				activateSignal.then(activate).catch(printErr);
 			if (typeof deactivate == 'function')
-				Script.onDeactivate(deactivate).catch(printErr);
+				deactivateSignal.then(deactivate).catch(printErr);
+
 		} catch (err) { printErr(err); }
 });
 
