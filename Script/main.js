@@ -79,7 +79,7 @@ const quickPickerItems = [
 quickPicker.matchOnDescription = true;
 quickPicker.onDidAccept(async () => {
 	try {
-	/**@type {PickerOption} */
+		/**@type {PickerOption} */
 		// @ts-ignore
 		const selected = quickPicker.activeItems[0];
 		selected.priority++;
@@ -194,4 +194,6 @@ const example = `/// <reference path="${path.join(extensionPath, 'global.d.ts').
 // API - https://code.visualstudio.com/api/references/vscode-api 
 // 'Reload Window' or 'Restart Extension Host' after edit...
 
-window.showInformationMessage('Hello World!')`;
+Script.onActivate(_ctx => {
+	window.showInformationMessage('Hello World!');
+})`;
