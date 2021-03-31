@@ -1,18 +1,16 @@
-# Dark mode for vs code
+# Just Black for VSCode
 
-This drak theme was desine spacifely for syntax highlighting .
-
-## Info
+This dark theme was designed specifically for syntax highlighting.
 
 ![Try it out!](https://raw.githubusercontent.com/nurmohammed840/VSC.ext/master/JustBlack/img/one.png)</br></br></br>
 
 ![Try it out!](https://raw.githubusercontent.com/nurmohammed840/VSC.ext/master/JustBlack/img/two.png)
-created on November,2019
+created on November, 2019
 
 ### Note
 
 Make sure <code>"editor.semanticHighlighting.enabled": false </code>
 
-#### Do you like it !?
+#### Do you like it!?
 
-Any suggestions OR report issue on <a href="https://github.com/nurmohammed840/VSC.ext">GitHub</a>
+Feel free to leave suggestions or report issues on <a href="https://github.com/nurmohammed840/VSC.ext">GitHub</a>.
