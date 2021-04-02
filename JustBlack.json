@@ -1496,13 +1496,6 @@
 			}
 		},
 		{
-			"scope": "support.class.builtin",
-			"settings": {
-				"foreground": "#B69100",
-				"fontStyle": "bold"
-			}
-		},
-		{
 			"scope": "support.function.dom",
 			"settings": {
 				"foreground": "#FF4848",
@@ -1619,13 +1612,6 @@
 			"settings": {
 				"foreground": "#00FFFF",
 				"fontStyle": ""
-			}
-		},
-		{
-			"scope": "support.class.builtin",
-			"settings": {
-				"foreground": "#AE00FF",
-				"fontStyle": "bold"
 			}
 		},
 		{
