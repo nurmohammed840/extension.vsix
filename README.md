@@ -38,10 +38,4 @@ module.exports = { activate, deactivate }
 ## Script Settings
  - `script.path: string | null` : Default main script directory.
 
-### For more information
-
-* [Just Black](https://marketplace.visualstudio.com/items?itemName=nur.just-black)
-* [Script Repository](https://github.com/nurmohammed840/VSC.ext)
-* [Visual Studio Code's API](https://code.visualstudio.com/api/references/vscode-api)
-
 **Happy Hacking!**

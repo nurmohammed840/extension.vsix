@@ -1,39 +1,33 @@
 {
-    "activationEvents": [
-        "*"
-    ],
-    "contributes": {
-        "commands": [],
-        "configuration": {
-            "properties": {
-                "script.path": {
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "scope": "resource",
-                    "default": null,
-                    "description": "Default main script directory."
-                }
-            },
-            "title": "Script"
-        }
-    },
-    "main": "./main.js",
-    "name": "script",
-    "version": "0.1.3",
-    "publisher": "Nur",
-    "icon": "logo.png",
-    "displayName": "Script",
-    "engines": {
-        "vscode": "^1.51.0"
-    },
-    "description": "Run VSCode API as script.",
-    "categories": [
-        "Other"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/nurmohammed840/extension.vsix/tree/Script"
-    }
+  "name": "just-black",
+  "displayName": "Just Black",
+  "description": "Dark Theme With Syntax Highlighter!",
+  "version": "3.1.0",
+  "publisher": "Nur",
+  "engines": {
+    "vscode": "^1.40.0"
+  },
+  "icon": "img/logo.png",
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "just black",
+    "dark",
+    "black",
+    "theme"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nurmohammed840/extension.vsix/tree/Just-Black"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Just Black",
+        "uiTheme": "vs-dark",
+        "path": "./JustBlack.json"
+      }
+    ]
+  }
 }
