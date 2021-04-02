@@ -1,4 +1,5 @@
-/// <reference path="./global.d.ts" />
+/// <reference path="./@types/api.global.d.ts" />
+/// <reference path="./@types/vscode.global.d.ts" />
 // @ts-check
 // Feel free to modify, If you break something.
 // Just Reinstall this extention. :)
@@ -166,8 +167,12 @@ Promise.allSettled(scriptFiles).then(settledScriptFiles => {
 				if (is == 'Later')
 					ctx.workspaceState.update('ignoreScripts', [...ignoreScripts, filepath]);
 				if (is == 'Create') {
+					const jsconfigPath = path.join(path.dirname(filepath), "./jsconfig.json");
 					await fs.mkdir(path.dirname(filepath), { recursive: true });
-					await fs.writeFile(filepath, example, { encoding: 'utf-8' });
+					await Promise.all([
+						fs.writeFile(filepath, example, { encoding: 'utf-8' }),
+						fs.writeFile(jsconfigPath, JSON.stringify(jsonConfig, null, 4), { encoding: 'utf-8' })
+					]);
 					openTextFile(filepath);
 				}
 			}).catch(printErr);
@@ -190,10 +195,22 @@ Promise.allSettled(scriptFiles).then(settledScriptFiles => {
 		} catch (err) { printErr(err); }
 });
 
-const example = `/// <reference path="${path.join(extensionPath, 'global.d.ts').replace(/\\/g, '/')}" />
-// API - https://code.visualstudio.com/api/references/vscode-api 
+const example = `/// <reference path="${path.join(extensionPath, '@types/vscode.global.d.ts').replace(/\\/g, '/')}" />
+/// <reference path="${path.join(extensionPath, '@types/api.global.d.ts').replace(/\\/g, '/')}" />
+//  @ts-check
+//  API: https://code.visualstudio.com/api/references/vscode-api
 // 'Reload Window' or 'Restart Extension Host' after edit...
 
 Script.onActivate(_ctx => {
 	window.showInformationMessage('Hello World!');
-})`;
+});
+`;
+
+const jsonConfig = {
+	"compilerOptions": {
+		"target": "esnext",
+		"lib": [
+			"esnext"
+		]
+	}
+}

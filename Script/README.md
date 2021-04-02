@@ -1,5 +1,5 @@
 # Script
-Script is a zero dependencie extension that allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) as a script.
+It allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) .
 
 ## API
 All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) used globaly. It also has some Api.
