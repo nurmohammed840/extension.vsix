@@ -1,18 +1,41 @@
-# Dark mode for vs code
+# Script
+It allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) .
 
-This drak theme was desine spacifely for syntax highlighting .
+## API
+All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) used globaly. It also has some Api.
+- `print(msg:string): void`: Print message to Output.
+- `println(msg:string): void`: Print to Output with newline.
+- `Context`: get `Promise<ExtensionContext>`.
+#### # Script namespace
+- `output(method: 'clear' | 'hide' | 'show')`: show, hide and clear output programmatically.
+- `picker(label: string, fn: () => void): cleanUp` : Add event to picker
+- `picker(pickerOption: PickerOption): cleanUp` : Add event to picker
+- `onActivate(fn: (ctx: ExtensionContext) => any): Promise<any>` : Add event listener on extension activate.
+- `onDeactivate(fn: () => void)` : Add event listener on extension deactivate.
 
-## Info
+## Example
 
-![Try it out!](https://raw.githubusercontent.com/nurmohammed840/extension.vsix/tree/Just-Black/img/one.png)</br></br></br>
+We want to run this script. path `${workspace}/.vscode/main.js`
 
-![Try it out!](https://raw.githubusercontent.com/nurmohammed840/extension.vsix/tree/Just-Black/img/two.png)
-created on November,2019
+```js 
+// All Visual-Studio-Code API used globaly.
+function activate(context) {
+     // This line of code will only be executed once when your script is activated
+	window.showInformationMessage('Hello World!');
+}
+// this method is called when your extension is deactivated
+function deactivate() {}
 
-### Note
+module.exports = { activate, deactivate }
+```
 
-Make sure <code>"editor.semanticHighlighting.enabled": false </code>
+## Requirements
 
-#### Do you like it !?
+ - Create a folder named `.vscode` in your workspace.
+ - Create a file named `main.js` in `.vscode` folder. 
+ - `Reload Window` or `Restart Extension Host` after edit. 
 
-Any suggestions OR report issue on <a href="https://github.com/nurmohammed840/extension.vsix">GitHub</a>
+## Script Settings
+ - `script.path: string | null` : Default main script directory.
+
+**Happy Hacking!**
