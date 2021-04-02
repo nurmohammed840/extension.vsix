@@ -1,5 +1,5 @@
-#### [Just-Black](https://github.com/nurmohammed840/extension.vsix/tree/Just-Black) - Theme
+### [Just-Black](https://github.com/nurmohammed840/extension.vsix/tree/Just-Black) - Theme
 This drak theme was desine spacifely for syntax highlighting .
 
-#### [Script](https://github.com/nurmohammed840/extension.vsix/tree/Script) - Other
+### [Script](https://github.com/nurmohammed840/extension.vsix/tree/Script) - Other
 It allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api). You can also use it as playground.
