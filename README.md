@@ -9,9 +9,17 @@ This drak theme was desine spacifely for syntax highlighting .
 ![Try it out!](https://raw.githubusercontent.com/nurmohammed840/extension.vsix/Just-Black/img/two.png)
 created on November,2019
 
-### Note
+### Recommended Settings
 
-Make sure <code>"editor.semanticHighlighting.enabled": false </code>
+```json
+{
+    "workbench.sash.size": 1,
+    "workbench.sash.hoverDelay": 0,
+    "editor.cursorStyle": "line-thin",
+    "editor.cursorBlinking": "phase",
+    "editor.semanticHighlighting.enabled": false,
+}
+```
 
 #### Do you like it !?
 

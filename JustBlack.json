@@ -344,7 +344,7 @@
             "scope": "meta.paragraph.markdown",
             "settings": {
                 "foreground": "#EEEEEE",
-                "fontStyle": "italic"
+                "fontStyle": ""
             }
         },
         {
