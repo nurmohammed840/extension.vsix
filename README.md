@@ -1,6 +1,8 @@
 # Script
 It allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) .
 
+![Demo](https://imgur.com/La5aQaW)
+
 ## API
 All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) used globaly. It also has some Api.
 - `print(msg:string): void`: Print message to Output.
