@@ -1,7 +1,7 @@
 # Script
 It allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) .
 
-![Demo](https://imgur.com/La5aQaW)
+![Demo](https://raw.githubusercontent.com/nurmohammed840/extension.vsix/Script/img/demo.gif)
 
 ## API
 All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) used globaly. It also has some Api.
