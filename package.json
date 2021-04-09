@@ -28,7 +28,7 @@
     "displayName": "Script",
     "description": "Run VSCode API as script.",
     "main": "./src/_start.js",
-    "icon": "./img/logo.png",
+    "icon": "img/logo.png",
     "qna": "https://github.com/nurmohammed840/extension.vsix/issues",
     "devDependencies": {
         "@types/node": "^14.14.37"

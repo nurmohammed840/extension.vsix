@@ -28,6 +28,11 @@ function deactivate() {}
 module.exports = { activate, deactivate }
 ```
 
+## Settings
+
+- `script.main : string` - The primary entry point to your program ( default: .vscode/main ).
+- `script.suggestCreateScript : boolean` - Suggest for creating script, If there isn't any script founded in workspace. ( default: true )
+
 ## Requirements
 
  - Create a folder named `.vscode` in your workspace.
@@ -36,5 +41,6 @@ module.exports = { activate, deactivate }
 
 ## Script Settings
  - `script.path: string | null` : Default main script directory.
+
 
 **Happy Hacking!**

@@ -10,3 +10,6 @@ __Registry__.json
 yarn.lock
 yarn-error.log
 package-lock.json
+
+# extension package
+*.vsix
