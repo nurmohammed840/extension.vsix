@@ -1,5 +1,4 @@
-//@ts-nocheck
-
+// @ts-nocheck
 // Type definitions for Visual Studio Code 1.52
 // Project: https://github.com/microsoft/vscode
 // Definitions by: Visual Studio Code Team, Microsoft <https://github.com/microsoft>
@@ -13,7 +12,7 @@
  * Type Definition for Visual Studio Code 1.52 Extension API
  * See https://code.visualstudio.com/api for more information
  */
-import { Thenable } from "./thenable.d.ts";
+import { Thenable } from "./thenable";
 
 declare global {
     /**

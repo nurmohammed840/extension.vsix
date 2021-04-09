@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}"
+            ],
+            "name": "Launch Extension",
+            "outFiles": [
+                "${workspaceFolder}/src/**/*.js"
+            ],
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "request": "launch",
+            "type": "pwa-extensionHost"
+        }
+    ]
+}

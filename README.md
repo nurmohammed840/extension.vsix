@@ -7,13 +7,10 @@ It allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/r
 All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api) used globaly. It also has some Api.
 - `print(msg:string): void`: Print message to Output.
 - `println(msg:string): void`: Print to Output with newline.
-- `Context`: get `Promise<ExtensionContext>`.
 #### # Script namespace
 - `output(method: 'clear' | 'hide' | 'show')`: show, hide and clear output programmatically.
 - `picker(label: string, fn: () => void): cleanUp` : Add event to picker
 - `picker(pickerOption: PickerOption): cleanUp` : Add event to picker
-- `onActivate(fn: (ctx: ExtensionContext) => any): Promise<any>` : Add event listener on extension activate.
-- `onDeactivate(fn: () => void)` : Add event listener on extension deactivate.
 
 ## Example
 

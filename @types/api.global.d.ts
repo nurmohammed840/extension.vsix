@@ -1,8 +1,8 @@
 export { }
-
+import vscode from "vscode";
 declare global {
-    interface PickerOption {
-        fn(): void
+    interface PickerItem {
+        fn(): any
         label: string
         busy?: boolean
         detail?: string
@@ -10,27 +10,29 @@ declare global {
         alwaysShow?: boolean
         description?: string
     }
-
-    const Context: Promise<ExtensionContext>;
-    namespace Script {
-        /**
-         * Listen onActivate.
-         * You can also use it to get `ExtensionContext`
-         */
-        function onActivate(fn: (ctx: ExtensionContext) => any): Promise<any>
-        /** This Event run when the Extention is deactivated */
-        function onDeactivate(fn: () => void): void
-        /** `show`, `hide` and `clear` ourput programmatically */
-        function output(method: 'show' | 'hide' | 'clear'): void;
-
-        /** @returns Cleanup function */
-        function picker(label: string, fn: () => void, priority = 0): () => void;
-        /** @returns Cleanup function */
-        function picker(object: PickerOption): () => void;
-        function picker(any: PickerOption | string, fn: () => void, priority = 0): () => void;
+    /** @returns Cleanup function */
+    interface Picker {
+        (label: string, fn: () => void, priority?: number): () => PickerItem | undefined;
+        (object: PickerItem): () => PickerItem | undefined;
     }
+    /** `show`, `hide` and `clear` ourput programmatically */
+    function output(method: 'show' | 'hide' | 'clear'): void;
     /** Print message to `output` */
     function print(msg?: any): void;
     /** Print to `Output` with newline. */
     function println(msg?: any): void;
+    /** @returns Cleanup function */
+    var picker: Picker
+
+    function openTextFile(...filepath: string[]): vscode.Thenable<vscode.TextEditor>
+    function showErrMsg(error: any, lable?: string, fn?: () => any): Thenable<false | void>
+    // function useVScodeAPIGlobally(): void;
+
+    interface Show {
+        errMsg: (msg: string, btn?: Record<string, () => any>) => Promise<any>;
+        infoMsg: (msg: string, btn?: Record<string, () => any>) => Promise<any>;
+        warnMsg: (msg: string, btn?: Record<string, () => any>) => Promise<any>;
+    }
+
+    var show: Show;
 }

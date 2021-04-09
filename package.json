@@ -5,35 +5,68 @@
     "contributes": {
         "commands": [],
         "configuration": {
+            "title": "Script",
             "properties": {
-                "script.path": {
-                    "type": [
-                        "string",
-                        "null"
-                    ],
+                "script.main": {
+                    "type": "string",
                     "scope": "resource",
-                    "default": null,
-                    "description": "Default main script directory."
+                    "default": ".vscode/main.js",
+                    "description": "The primary entry point to your program."
+                },
+                "script.suggestCreateScript": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Suggest for creating script, If there isn't any script founded in workspace."
                 }
-            },
-            "title": "Script"
+            }
         }
     },
-    "main": "./main.js",
     "name": "script",
-    "version": "0.1.3",
+    "version": "0.2.0",
     "publisher": "Nur",
-    "icon": "./img/logo.png",
+    "license": "MIT",
     "displayName": "Script",
+    "description": "Run VSCode API as script.",
+    "main": "./src/_start.js",
+    "icon": "./img/logo.png",
+    "qna": "https://github.com/nurmohammed840/extension.vsix/issues",
+    "devDependencies": {
+        "@types/node": "^14.14.37"
+    },
+    "dependencies": {
+        "@types/vscode": "^1.55.0"
+    },
     "engines": {
         "vscode": "^1.51.0"
     },
-    "description": "Run VSCode API as script.",
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "nur",
+        "script"
+    ],
+    "galleryBanner": {
+        "color": "#000",
+        "theme": "dark"
+    },
+    "scripts": {
+        "uninstall": "node ./src/lifecycle",
+        "vscode:uninstall": "node ./src/lifecycle",
+        "vscode:prepublish": "tsc"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/nurmohammed840/extension.vsix/tree/Script"
-    }
+    },
+    "bugs": {
+        "email": "nurmohammed840@gmail.com",
+        "url": "https://github.com/nurmohammed840/extension.vsix/issues"
+    },
+    "contributors": [
+        {
+            "name": "nur",
+            "email": "nurmohammed840@gmail.com"
+        }
+    ]
 }

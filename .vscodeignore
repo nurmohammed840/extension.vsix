@@ -1,12 +1,17 @@
 node_modules
 
-src/*.js
-src/*.js.map
-
 # This file is created, In development.
 __Registry__.json
 
+# ignore typescript, and javascript source map
+**/*.ts
+src/*.ts
+src/*.js.map
+tsconfig.json
+
 # ignore dev setup
+.vscode
+.vscodeignore
 yarn.lock
 yarn-error.log
 package-lock.json
