@@ -1,13 +1,11 @@
 import * as path from "path";
-import { outputChannel, println } from "./outputChannel";
 import { GenMsgBtn, GenMsgType } from "./types";
+import { outputChannel, println } from "./outputChannel";
 
-export const extensionPath = extensions.getExtension('nur.script')?.extensionPath || "";
 export const getSetting = workspace.getConfiguration('script').get;
+export const extensionPath = extensions.getExtension('nur.script')?.extensionPath || "";
 
-if (!extensionPath) {
-    showErrMsg("Extension Path Not Found!")
-}
+if (!extensionPath) showErrMsg("Extension Path Not Found!");
 
 export interface Deferred<T> extends Promise<T> {
     resolve(value?: T | PromiseLike<T>): void;
@@ -53,7 +51,6 @@ const _genMsg = (type: GenMsgType, msg = "", btns?: GenMsgBtn) => new Promise((r
         }
     }, reject);
 });
-
 export const show = {
     errMsg: (msg: string, btn?: GenMsgBtn) => _genMsg("showErrorMessage", msg, btn),
     infoMsg: (msg: string, btn?: GenMsgBtn) => _genMsg("showInformationMessage", msg, btn),

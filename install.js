@@ -1,12 +1,14 @@
-const cp = require("child_process");
 const fs = require("fs");
+const cp = require("child_process");
+const package = JSON.parse(fs.readFileSync("./package.json").toString());
+const extensionPath = `${package.name}-${package.version}.vsix`;
 
-const package = JSON.parse(fs.readFileSync("./package.json").toString())
-console.log('\033c')
-console.log(`Installing... ${package.name}-${package.version}.vsix`);
+console.log('\033c');
 console.time('Done');
-cp.exec(`vsce package && code --install-extension ${package.name}-${package.version}.vsix`, (error, stdout) => {
-    if (error) return console.error(error);
-    console.log(stdout);
+console.log(`Installing... ${extensionPath}`);
+
+cp.exec(`vsce package && code --install-extension ${extensionPath}`, (err, stdout) => {
+    if (err) console.error(err);
+    else console.log(stdout);
     console.timeEnd('Done');
 });

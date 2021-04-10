@@ -7,7 +7,6 @@ You can collaborate by:
 - refactoring some code 
 - improving documentation
 
-
 ### Development Setup
 
 * Clone this repository : `git clone https://github.com/nurmohammed840/extension.vsix.git`

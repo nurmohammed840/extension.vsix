@@ -3,15 +3,15 @@ node_modules
 src/*.js
 src/*.js.map
 
-# This file is created, In development.
+# files is created, In development.
 __Registry__.json
+.vscode/main.js
+.vscode/jsconfig.json
 
 # ignore dev setup
 yarn.lock
 yarn-error.log
 package-lock.json
-.vscode/jsconfig.json
-.vscode/main.js
 
 # extension package
 *.vsix

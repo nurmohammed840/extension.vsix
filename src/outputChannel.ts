@@ -4,7 +4,7 @@ import * as util from "util";
 
 export const outputChannel = window.createOutputChannel('Script');
 
-globalThis.output = function (method, option = false) {
+export function output(method: "show" | "hide" | "clear", option = false) {
     if (method == 'show') outputChannel.show(option);
     else if (method == 'hide') outputChannel.hide();
     else if (method == 'clear') outputChannel.clear();
@@ -19,5 +19,6 @@ const inspector = (data: any) => typeof data == "boolean" ||
 export function println(data: any) {
     outputChannel.appendLine(inspector(data));
 }
-globalThis.print = data => outputChannel.append(inspector(data));
-globalThis.println = println;
+export function print(data: any) {
+    outputChannel.append(inspector(data));
+}

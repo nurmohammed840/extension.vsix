@@ -9,8 +9,8 @@ import { Executor } from "./executor";
 import { RegistryState } from "./types";
 import { fetchScripts } from "./fetcher";
 import { createBoilerPlate } from "./example";
-import { outputChannel } from "./outputChannel";
-import { quickPicker, showPicker } from "./quickPicker";
+import { quickPicker, showPicker, picker } from "./quickPicker";
+import { outputChannel, output, print, println } from "./outputChannel";
 import { deferred, openTextFile, show, showErrMsg, } from "./utils";
 
 const cmd = commands.registerCommand('script.showPicker', showPicker);
@@ -24,6 +24,10 @@ statusBarItem.show();
 
 // Exposed some utility functions, Globally.
 globalThis.show = show;
+globalThis.output = output;
+globalThis.picker = picker;
+globalThis.print = print;
+globalThis.println = println;
 globalThis.showErrMsg = showErrMsg;
 globalThis.openTextFile = openTextFile;
 
@@ -45,22 +49,22 @@ fetchScripts().then(() => {
         executor.runScript(script.filepath);
     }
     if (excludeScripts.length != 0) {
-        const removeCreate_Script = picker("Create Script", () => {
-            const pickerItems: PickerItem[] = [];
-            for (const script of excludeScripts) pickerItems.push({
-                label: script.name,
-                detail: script.filepath,
-                busy: true,
-                fn() {
-                    ignoredScripts.push(script);
-                    excludeScripts.splice(excludeScripts.indexOf(script), 1);
-                    if (!excludeScripts.length) removeCreate_Script();
-                    return createBoilerPlate(script);
-                }
-            });
-            quickPicker.items = pickerItems;
-            quickPicker.show();
-        });
+        // const Create_Script = picker("Create Script", () => {
+        //     const pickerItems: PickerItem[] = [];
+        //     for (const script of excludeScripts) pickerItems.push({
+        //         label: script.name,
+        //         detail: script.filepath,
+        //         busy: true,
+        //         fn() {
+        //             ignoredScripts.push(script);
+        //             excludeScripts.splice(excludeScripts.indexOf(script), 1);
+        //             if (!excludeScripts.length) Create_Script.dispose();
+        //             return createBoilerPlate(script);
+        //         }
+        //     });
+        //     quickPicker.items = pickerItems;
+        //     quickPicker.show();
+        // });
     }
     if (allowedScripts.length || ignoredScripts.length) picker("Revaluate", () => {
         const pickerItems: PickerItem[] = [];

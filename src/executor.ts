@@ -18,7 +18,6 @@ export class Executor {
                 this.deactivators[filepath] = deactivate;
 
         } catch (error) {
-            console.log(error?.code);
             if (error?.code == "ENOENT" || error?.code == "MODULE_NOT_FOUND")
                 return error
             else

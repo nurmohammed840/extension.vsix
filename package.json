@@ -27,7 +27,7 @@
     "license": "MIT",
     "displayName": "Script",
     "description": "Run VSCode API as script.",
-    "main": "./src/_start.js",
+    "main": "src/_start.js",
     "icon": "img/logo.png",
     "qna": "https://github.com/nurmohammed840/extension.vsix/issues",
     "dependencies": {

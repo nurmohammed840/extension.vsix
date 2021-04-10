@@ -51,6 +51,9 @@ export function exclude({ filepath, name }: Script) {
     registry[filepath] = { name, state: RegistryState.exclude };
 }
 
+export function onExclude(_fn: (script: Script) => void) {
+
+}
 
 export function getByType(state: RegistryState) {
     const results: Script[] = [];

@@ -10,6 +10,9 @@ export interface PickerItem {
     alwaysShow?: boolean
     description?: string
 }
+export interface PickerItemRef extends PickerItem {
+    dispose(): void
+}
 
 export enum RegistryState {
     ignored,
