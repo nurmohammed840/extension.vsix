@@ -30,11 +30,13 @@
     "main": "./src/_start.js",
     "icon": "img/logo.png",
     "qna": "https://github.com/nurmohammed840/extension.vsix/issues",
-    "devDependencies": {
-        "@types/node": "^14.14.37"
-    },
     "dependencies": {
         "@types/vscode": "^1.55.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.14.37",
+        "typescript": "^4.2.4",
+        "vsce": "^1.87.1"
     },
     "engines": {
         "vscode": "^1.51.0"

@@ -1,4 +1,4 @@
-<img src="https://miro.medium.com/max/6400/1*xe9kgx33a2DHVV3tCjFp2Q.jpeg" alt="Image lists" width="450"/>
+<img src="https://miro.medium.com/max/6400/1*xe9kgx33a2DHVV3tCjFp2Q.jpeg" alt="collaborate" width="450"/>
 
 You can collaborate by:
 - reporting bugs
@@ -14,17 +14,13 @@ You can collaborate by:
 * Switch branch : `git switch Script`
 * then run: `yarn` or `npm install`
 
-you also need typescript. to install it run: `npm i -g typescript`.
-
 For testing, simply tap `f5` or menually run `Launch Extension` in vscode debbuger.
 
 That's it!
 
 ## Install From Source
 
-1. You need `vsce` cli. to install it run : `npm i -g vsce`
-2. To generate extension.vsix file, run: `vsce package`
-3. To install it, run: `code --install-extension <extension_name-version>.vsix`
+Just run `node install`.
 
 ### Project Structure 
 

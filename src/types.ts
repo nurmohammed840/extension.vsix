@@ -4,6 +4,7 @@ export interface PickerItem {
     fn(): any
     label: string
     busy?: boolean
+    hide?: boolean
     detail?: string
     priority?: number
     alwaysShow?: boolean

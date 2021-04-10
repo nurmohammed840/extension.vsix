@@ -4,10 +4,11 @@ node_modules
 __Registry__.json
 
 # ignore typescript, and javascript source map
-**/*.ts
 src/*.ts
 src/*.js.map
 tsconfig.json
+
+install.js
 
 # ignore dev setup
 .vscode

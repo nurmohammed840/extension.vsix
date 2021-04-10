@@ -14,13 +14,12 @@ const PickerItems: PickerItem[] = [
     { label: 'Clear Output', priority: 0, fn() { outputChannel.clear(); }, },
     { label: 'Open Config File', priority: 0, fn() { openTextFile(extensionPath, 'package.json'); }, },
 ];
-
 /**  Reset to `null` everytime, When `showPicker()` called. */
 let busyState: PickerItem | null = null;
 export function showPicker() {
     busyState = null
     // @ts-ignore: `priority` isn't possibly 'undefined'
-    quickPicker.items = PickerItems.sort((a, b) => a.priority > b.priority ? -1 : 1);
+    quickPicker.items = PickerItems.filter(x => !x.hide).sort((a, b) => a.priority > b.priority ? -1 : 1);
     quickPicker.busy = false;
     quickPicker.show();
 }
@@ -55,23 +54,22 @@ quickPicker.onDidAccept(async () => {
 function picker(label: string, fn: () => any, priority?: number): () => PickerItem | undefined;
 function picker(object: PickerItem): () => PickerItem | undefined;
 function picker(any: string | PickerItem, fn?: () => any, priority?: number) {
-    const item = {} as PickerItem;
     // We are chacking strictly Because, User may use javascipt,
+    let item = {} as PickerItem;
     if (typeof any == 'string' && typeof fn == 'function') {
         item.fn = fn;
         item.label = any;
         item.priority = typeof priority == "number" ? priority : 0;
         PickerItems.push(item);
     }
-    else if (typeof any == 'object' && typeof any.label == 'string' && typeof any.fn == 'function') {
-        item.fn = any.fn;
-        item.label = any.label;
-        item.priority = typeof any.priority == "number" ? any.priority : 0;
-        if (typeof any.busy == 'boolean') item.busy = any.busy;
-        if (typeof any.detail == 'string') item.detail = any.detail;
-        if (typeof any.alwaysShow == 'boolean') item.alwaysShow = any.alwaysShow;
-        if (typeof any.description == 'string') item.description = any.description;
-        PickerItems.push(item);
+     else if (typeof any == 'object' && typeof any.label == 'string' && typeof any.fn == 'function') {
+        item = any;
+        any.priority = typeof any.priority == "number" ? any.priority : 0;
+        if (typeof any.busy != 'boolean') delete any.busy;
+        if (typeof any.detail != 'string') delete any.detail;
+        if (typeof any.alwaysShow == 'boolean') delete any.alwaysShow;
+        if (typeof any.description == 'string') delete any.description;
+        PickerItems.push(any);
     }
     return () => {
         const index = PickerItems.indexOf(item);

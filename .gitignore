@@ -10,6 +10,8 @@ __Registry__.json
 yarn.lock
 yarn-error.log
 package-lock.json
+.vscode/jsconfig.json
+.vscode/main.js
 
 # extension package
 *.vsix

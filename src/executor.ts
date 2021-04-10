@@ -18,7 +18,8 @@ export class Executor {
                 this.deactivators[filepath] = deactivate;
 
         } catch (error) {
-            if (error?.code == "ENOENT")
+            console.log(error?.code);
+            if (error?.code == "ENOENT" || error?.code == "MODULE_NOT_FOUND")
                 return error
             else
                 showErrMsg(error);
@@ -31,7 +32,10 @@ export class Executor {
             delete this.deactivators[filepath];
             delete require.cache[filepath];
             const error = this.runScript(filepath);
-            if (error?.code == "ENOENT") suggestCreateScript({ filepath, name })?.catch(showErrMsg);
+
+            if (error?.code == "ENOENT" || error?.code == "MODULE_NOT_FOUND") {
+                await suggestCreateScript({ filepath, name }, true);
+            }
         } catch (error) {
             showErrMsg(error);
         }

@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import { createBoilerPlate } from "./example";
 import * as menager from "./menager";
+import { createBoilerPlate } from "./example";
 import { RegistryState, Script } from "./types";
 import { getSetting, show, showErrMsg } from "./utils";
 
@@ -38,12 +38,15 @@ function addScriptFile({ filepath, name }: Script) {
     }
 }
 
-export function suggestCreateScript({ filepath, name }: Script) {
-    if (!shouldSuggestCreateScript) return
-    if (menager.getState({ name, filepath }) == RegistryState.exclude) return
+export function suggestCreateScript({ filepath, name }: Script, force = false) {
+    if (!force) {
+        if (!shouldSuggestCreateScript) return
+        if (menager.getState({ name, filepath }) == RegistryState.exclude) return
+    }
 
     return show.infoMsg(`Create a script. (${name}) ${filepath}`, {
         Create: () => createBoilerPlate({ filepath, name }),
         Deny() { menager.exclude({ filepath, name }) },
+        _() { menager.exclude({ filepath, name }) }
     });
 }

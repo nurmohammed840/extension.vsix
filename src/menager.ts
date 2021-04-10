@@ -2,6 +2,7 @@ import { promises as fs, readFileSync } from "fs";
 import * as path from "path";
 import { Registry, RegistryState, Script } from "./types";
 import { extensionPath, showErrMsg } from "./utils";
+import { println } from "./outputChannel";
 
 let registry: Registry = {};
 const scriptpath: string[] = [];
@@ -32,10 +33,12 @@ export function getState({ filepath, name }: Script) {
 }
 
 export function saveRegistry() {
+    println("awwsss")
     fs.writeFile(registryFilePath, JSON.stringify(registry, null, 1), { encoding: "utf-8" }).catch(showErrMsg);
 }
 
 export function allow({ filepath, name }: Script) {
+    println({ filepath, name })
     _addScriptpath(filepath);
     registry[filepath] = { name, state: RegistryState.allowed };
 }

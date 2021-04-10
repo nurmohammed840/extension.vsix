@@ -46,7 +46,7 @@ const _genMsg = (type: GenMsgType, msg = "", btns?: GenMsgBtn) => new Promise((r
         try {
             const handaler = (<any>btns)[<any>selectedItem];
             if (typeof handaler == "function") var value = await handaler();
-            else if (typeof defaultHandaler == "function") value = await defaultHandaler();
+            else if (typeof defaultHandaler == "function") value = await defaultHandaler()
             resolve(value);
         } catch (error) {
             reject(error);
