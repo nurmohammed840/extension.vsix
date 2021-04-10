@@ -4,14 +4,17 @@
 
 Object.assign(globalThis, require("vscode"));
 
+// Started fatching script, It will provide data to the `menager`,
+// Basically it power `menager`.
+import "./fetcher";
+
 import * as menager from "./menager";
 import { Executor } from "./executor";
-import { RegistryState } from "./types";
-import { fetchScripts } from "./fetcher";
-import { createBoilerPlate } from "./example";
+import { onFinishedFetching } from "./fetcher";
 import { quickPicker, showPicker, picker } from "./quickPicker";
 import { outputChannel, output, print, println } from "./outputChannel";
 import { deferred, openTextFile, show, showErrMsg, } from "./utils";
+import { createBoilerPlate } from "./example";
 
 const cmd = commands.registerCommand('script.showPicker', showPicker);
 const statusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 1000);
@@ -40,56 +43,65 @@ export function activate(context: ExtensionContext) {
 
 const executor = new Executor(deferContext);
 
-fetchScripts().then(() => {
-    const excludeScripts = menager.getByType(RegistryState.exclude);
-    const allowedScripts = menager.getByType(RegistryState.allowed);
-    const ignoredScripts = menager.getByType(RegistryState.ignored);
+// -----------------------------------------------------------------------
+// Todo: Need to refactor code for: better organized and more readbility... 
+let revaluatePickerItem: PickerItem[] = [];
+let createScriptPickerItem: PickerItem[] = [];
 
-    for (const script of allowedScripts) {
-        executor.runScript(script.filepath);
-    }
-    if (excludeScripts.length != 0) {
-        // const Create_Script = picker("Create Script", () => {
-        //     const pickerItems: PickerItem[] = [];
-        //     for (const script of excludeScripts) pickerItems.push({
-        //         label: script.name,
-        //         detail: script.filepath,
-        //         busy: true,
-        //         fn() {
-        //             ignoredScripts.push(script);
-        //             excludeScripts.splice(excludeScripts.indexOf(script), 1);
-        //             if (!excludeScripts.length) Create_Script.dispose();
-        //             return createBoilerPlate(script);
-        //         }
-        //     });
-        //     quickPicker.items = pickerItems;
-        //     quickPicker.show();
-        // });
-    }
-    if (allowedScripts.length || ignoredScripts.length) picker("Revaluate", () => {
-        const pickerItems: PickerItem[] = [];
-        for (const script of allowedScripts) pickerItems.push({
+const revaluate = picker("Revaluate", () => {
+    quickPicker.items = revaluatePickerItem;
+    quickPicker.show();
+});
+const createScript = picker("Create Script", () => {
+    quickPicker.items = createScriptPickerItem;
+    quickPicker.show();
+});
+
+revaluate.hide = true;
+createScript.hide = true;
+
+menager.onChange(() => {
+    const Scripts = menager.getByType();
+    console.log(Scripts);
+    // Updataing PickerItem by replace it, rather then mutation,
+    // For simplicity sake 
+    revaluatePickerItem = Scripts.allowed
+        .map(script => ({
             label: script.name,
             detail: script.filepath,
             fn() { executor.revaluate(script) }
-        });
-        for (const script of ignoredScripts) pickerItems.push({
+        }))
+        .concat(Scripts.exclude.map(script => ({
             label: script.name,
             detail: script.filepath,
             description: 'ignored',
             fn() {
                 menager.allow(script);
-                allowedScripts.push(script);
                 executor.revaluate(script);
-                ignoredScripts.splice(ignoredScripts.indexOf(script), 1);
             }
-        });
+        })));
 
-        if (allowedScripts.length == 1 && pickerItems.length == 1) return pickerItems[0]?.fn();
+    createScriptPickerItem = Scripts.exclude.map(script => ({
+        label: script.name,
+        detail: script.filepath,
+        fn() {
+            menager.ignore(script)
+            return createBoilerPlate(script.filepath);
+        }
+    }));
 
-        quickPicker.items = pickerItems;
-        quickPicker.show();
-    });
+    revaluate.hide = !revaluatePickerItem.length ? true : false;
+    createScript.hide = !createScriptPickerItem.length ? true : false
+    console.log(revaluate.hide, createScript.hide)
+});
+
+// ---------------------------------------------------------------------------------
+
+onFinishedFetching().then(() => {
+    const Scripts = menager.getByType();
+    for (const script of Scripts.allowed) {
+        executor.runScript(script.filepath);
+    }
 });
 
 export function deactivate() {

@@ -70,7 +70,7 @@ function picker(any: string | PickerItem, fn?: () => any, priority?: number) {
     }
     item.dispose = () => {
         const index = pickerItems.indexOf(item);
-        index == -1 && pickerItems.splice(index, 1);
+        index != -1 && pickerItems.splice(index, 1);
     };
     return item
 }

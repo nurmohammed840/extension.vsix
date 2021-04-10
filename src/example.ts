@@ -1,12 +1,9 @@
 import { promises as fs } from "fs";
 import * as path from "path";
-import * as menager from "./menager";
-import { Script } from "./types";
 import { extensionPath } from "./utils";
 
 
-export async function createBoilerPlate({ name, filepath }: Script) {
-    menager.ignore({ filepath, name });
+export async function createBoilerPlate(filepath: string) {
     const jsConfigPath = path.join(path.dirname(filepath), "./jsconfig.json");
     await fs.mkdir(path.dirname(filepath), { recursive: true });
     await Promise.all([

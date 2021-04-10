@@ -8,7 +8,7 @@ export class Executor {
     deactivators: Record<string, () => void> = {};
     constructor(public deferContext: Deferred<ExtensionContext>) { }
 
-    runScript(filepath: string) {
+    runScript(filepath: string): any {
         try {
             const { activate, deactivate } = require(filepath);
             if (typeof activate == 'function')
@@ -19,12 +19,12 @@ export class Executor {
 
         } catch (error) {
             if (error?.code == "ENOENT" || error?.code == "MODULE_NOT_FOUND")
-                return error
+                return "NOT_FOUND"
             else
                 showErrMsg(error);
         }
     }
-
+    
     async revaluate({ filepath, name }: Script) {
         try {
             await this.deactivators[filepath]?.();
@@ -32,7 +32,7 @@ export class Executor {
             delete require.cache[filepath];
             const error = this.runScript(filepath);
 
-            if (error?.code == "ENOENT" || error?.code == "MODULE_NOT_FOUND") {
+            if (error == "NOT_FOUND") {
                 await suggestCreateScript({ filepath, name }, true);
             }
         } catch (error) {

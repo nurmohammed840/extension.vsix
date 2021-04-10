@@ -2,29 +2,54 @@ import { promises as fs, readFileSync } from "fs";
 import * as path from "path";
 import { Registry, RegistryState, Script } from "./types";
 import { extensionPath, showErrMsg } from "./utils";
-import { println } from "./outputChannel";
 
-let registry: Registry = {};
-const scriptpath: string[] = [];
+
+let newRegistry: Registry = {};
+let oldRegistry: Registry = {};
+const eventListaner: (() => void)[] = [];
 const registryFilePath = path.join(extensionPath, "__Registry__.json");
 
 try {
-    registry = JSON.parse(readFileSync(registryFilePath).toString());
+    oldRegistry = JSON.parse(readFileSync(registryFilePath).toString());
 } catch (error) {
-    if (error?.code != 'ENOENT') showErrMsg(error);
+    if (!(error?.code == 'ENOENT' || error?.code == "MODULE_NOT_FOUND")) showErrMsg(error?.code);
     fs.writeFile(registryFilePath, "{}").catch(showErrMsg);
 }
 
-// private function
-function _addScriptpath(filepath: string) {
-    if (!scriptpath.includes(filepath)) {
-        scriptpath.push(filepath);
+export function saveRegistry() {
+    const mergedRegistry = JSON.stringify(Object.assign(oldRegistry, newRegistry), null, 1);
+    fs.writeFile(registryFilePath, mergedRegistry, { encoding: "utf-8" }).catch(showErrMsg);
+}
+
+async function _executeListeners() {
+    for (const fn of eventListaner) {
+        try {
+            await fn();
+        } catch (error) {
+            showErrMsg(error);
+        }
     }
 }
 
-export function getState({ filepath, name }: Script) {
-    _addScriptpath(filepath);
-    const some = registry[filepath];
+export function allow({ filepath, name }: Script) {
+    newRegistry[filepath] = { name, state: RegistryState.allowed };
+    _executeListeners();
+}
+export function ignore({ filepath, name }: Script) {
+    newRegistry[filepath] = { name, state: RegistryState.ignored };
+    _executeListeners();
+}
+export function exclude({ filepath, name }: Script) {
+    newRegistry[filepath] = { name, state: RegistryState.exclude };
+    _executeListeners();
+}
+
+export function onChange(fn: () => void) {
+    eventListaner.push(fn);
+}
+
+export function getOldState({ filepath, name }: Script) {
+    const some = oldRegistry[filepath];
     return some
         ? some.name == name
             ? some.state    // RegistryState
@@ -32,34 +57,21 @@ export function getState({ filepath, name }: Script) {
         : undefined;        // If entry not found
 }
 
-export function saveRegistry() {
-    println("awwsss")
-    fs.writeFile(registryFilePath, JSON.stringify(registry, null, 1), { encoding: "utf-8" }).catch(showErrMsg);
-}
+export function getByType(from = "new") {
+    const results: Record<'allowed' | 'exclude' | 'ignored', Script[]> = {
+        allowed: [],
+        exclude: [],
+        ignored: []
+    }
+    for (const [filepath, { name, state }] of Object.entries(from == "new" ? newRegistry : oldRegistry)) {
+        switch (state) {
+            case RegistryState.allowed: results.allowed.push({ filepath, name });
+                break
+            case RegistryState.exclude: results.exclude.push({ filepath, name })
+                break
+            case RegistryState.ignored: results.ignored.push({ filepath, name })
+        }
 
-export function allow({ filepath, name }: Script) {
-    println({ filepath, name })
-    _addScriptpath(filepath);
-    registry[filepath] = { name, state: RegistryState.allowed };
-}
-export function ignore({ filepath, name }: Script) {
-    _addScriptpath(filepath);
-    registry[filepath] = { name, state: RegistryState.ignored };
-}
-export function exclude({ filepath, name }: Script) {
-    _addScriptpath(filepath);
-    registry[filepath] = { name, state: RegistryState.exclude };
-}
-
-export function onExclude(_fn: (script: Script) => void) {
-
-}
-
-export function getByType(state: RegistryState) {
-    const results: Script[] = [];
-    for (const filepath of scriptpath) {
-        const item = registry[filepath];
-        if (item && state == item.state) results.push({ filepath, name: item.name })
     }
     return results;
 }

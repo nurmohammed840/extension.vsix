@@ -8,7 +8,7 @@ import { getSetting, show, showErrMsg } from "./utils";
 // This Promise resolve, When all scriptfile resolve,
 const resolved: Promise<any>[] = [];
 const mainPath = getSetting<string>('main') || ".vscode/main.js";
-const shouldSuggestCreateScript = getSetting<boolean>('suggestCreateScript');
+const isSuggestCreateScript = getSetting<boolean>('suggestCreateScript');
 
 if (workspace.workspaceFolders) {
     for (const { name, uri } of workspace.workspaceFolders) {
@@ -22,31 +22,41 @@ if (workspace.workspaceFolders) {
     }
 }
 
-export function fetchScripts() {
-    return Promise.all(resolved).then(() => menager);
+export async function onFinishedFetching() {
+    await Promise.all(resolved)
 }
 
 function addScriptFile({ filepath, name }: Script) {
-    switch (menager.getState({ filepath, name })) {
-        case RegistryState.ignored: return
+    switch (menager.getOldState({ filepath, name })) {
+        case RegistryState.ignored: return menager.ignore({ filepath, name })
         case RegistryState.allowed: return menager.allow({ filepath, name })
+        // When script is create, its `ignored` by default,
+        // But if user modify `__Registry__.json` then,
+        // We still `ignore` script even its `exclude`, Becouse we found script.
         case RegistryState.exclude: return menager.ignore({ filepath, name })
-        default: return show.infoMsg(`Permission needed to run script. (${name}) ${filepath}`, {
-            Allow: () => menager.allow({ filepath, name }),
-            Ignore: () => menager.ignore({ filepath, name })
-        });
     }
+    return show.infoMsg(`Permission needed to run script. (${name}) ${filepath}`, {
+        Allow: () => menager.allow({ filepath, name }),
+        Ignore: () => menager.ignore({ filepath, name })
+    });
 }
 
-export function suggestCreateScript({ filepath, name }: Script, force = false) {
-    if (!force) {
-        if (!shouldSuggestCreateScript) return
-        if (menager.getState({ name, filepath }) == RegistryState.exclude) return
+export function suggestCreateScript(script: Script, force = false) {
+    const exclude = () => menager.exclude(script);
+    //`suggestCreateScript` also called internally, where `force` could be `true`
+    // So no matter what, script `exclude` or whatever,
+    // suggest user for creation a script...
+    if (!force && (!isSuggestCreateScript || menager.getOldState(script) == RegistryState.exclude)) {
+        // if it meet following logic 
+        // Not to suggest user for creation a script,
+        return exclude();
     }
-
-    return show.infoMsg(`Create a script. (${name}) ${filepath}`, {
-        Create: () => createBoilerPlate({ filepath, name }),
-        Deny() { menager.exclude({ filepath, name }) },
-        _() { menager.exclude({ filepath, name }) }
+    return show.infoMsg(`Create a script. (${script.name}) ${script.filepath}`, {
+        Create: () => {
+            menager.ignore(script);
+            createBoilerPlate(script.filepath);
+        },
+        Deny: exclude,
+        _: exclude
     });
 }
