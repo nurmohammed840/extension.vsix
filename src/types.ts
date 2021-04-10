@@ -15,9 +15,11 @@ export interface PickerItemRef extends PickerItem {
 }
 
 export enum RegistryState {
-    ignored,
-    allowed,
+    allowed, 
     exclude,
+    // Todo: Provide implement `ignored` state,
+    // ignored, 
+    // panding, 
 }
 
 export type Registry = Record<string, { name: string, state: RegistryState }>;

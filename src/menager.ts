@@ -22,21 +22,15 @@ export function saveRegistry() {
 }
 
 async function _executeListeners() {
-    for (const fn of eventListaner) {
-        try {
-            await fn();
-        } catch (error) {
-            showErrMsg(error);
-        }
+    for (const fn of eventListaner) try {
+        await fn();
+    } catch (error) {
+        showErrMsg(error);
     }
 }
 
 export function allow({ filepath, name }: Script) {
     newRegistry[filepath] = { name, state: RegistryState.allowed };
-    _executeListeners();
-}
-export function ignore({ filepath, name }: Script) {
-    newRegistry[filepath] = { name, state: RegistryState.ignored };
     _executeListeners();
 }
 export function exclude({ filepath, name }: Script) {
@@ -57,21 +51,17 @@ export function getOldState({ filepath, name }: Script) {
         : undefined;        // If entry not found
 }
 
-export function getByType(from = "new") {
-    const results: Record<'allowed' | 'exclude' | 'ignored', Script[]> = {
+export function getRegisteredScripts(from = "new") {
+    const results: Record<'allowed' | 'exclude', Script[]> = {
         allowed: [],
         exclude: [],
-        ignored: []
     }
     for (const [filepath, { name, state }] of Object.entries(from == "new" ? newRegistry : oldRegistry)) {
         switch (state) {
             case RegistryState.allowed: results.allowed.push({ filepath, name });
                 break
             case RegistryState.exclude: results.exclude.push({ filepath, name })
-                break
-            case RegistryState.ignored: results.ignored.push({ filepath, name })
         }
-
     }
     return results;
 }

@@ -44,7 +44,7 @@ export function activate(context: ExtensionContext) {
 const executor = new Executor(deferContext);
 
 // -----------------------------------------------------------------------
-// Todo: Need to refactor code for: better organized and more readbility... 
+// Todo: Need to refactor code: better organized and more readbility... 
 let revaluatePickerItem: PickerItem[] = [];
 let createScriptPickerItem: PickerItem[] = [];
 
@@ -61,44 +61,32 @@ revaluate.hide = true;
 createScript.hide = true;
 
 menager.onChange(() => {
-    const Scripts = menager.getByType();
-    console.log(Scripts);
+    const Scripts = menager.getRegisteredScripts();
     // Updataing PickerItem by replace it, rather then mutation,
     // For simplicity sake 
-    revaluatePickerItem = Scripts.allowed
-        .map(script => ({
-            label: script.name,
-            detail: script.filepath,
-            fn() { executor.revaluate(script) }
-        }))
-        .concat(Scripts.exclude.map(script => ({
-            label: script.name,
-            detail: script.filepath,
-            description: 'ignored',
-            fn() {
-                menager.allow(script);
-                executor.revaluate(script);
-            }
-        })));
+    revaluatePickerItem = Scripts.allowed.map(script => ({
+        label: script.name,
+        detail: script.filepath,
+        fn() { executor.revaluate(script) }
+    }))
 
     createScriptPickerItem = Scripts.exclude.map(script => ({
         label: script.name,
         detail: script.filepath,
         fn() {
-            menager.ignore(script)
+            menager.allow(script)
             return createBoilerPlate(script.filepath);
         }
     }));
 
     revaluate.hide = !revaluatePickerItem.length ? true : false;
-    createScript.hide = !createScriptPickerItem.length ? true : false
-    console.log(revaluate.hide, createScript.hide)
+    createScript.hide = !createScriptPickerItem.length ? true : false;
 });
 
 // ---------------------------------------------------------------------------------
 
 onFinishedFetching().then(() => {
-    const Scripts = menager.getByType();
+    const Scripts = menager.getRegisteredScripts();
     for (const script of Scripts.allowed) {
         executor.runScript(script.filepath);
     }

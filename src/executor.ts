@@ -33,7 +33,7 @@ export class Executor {
             const error = this.runScript(filepath);
 
             if (error == "NOT_FOUND") {
-                await suggestCreateScript({ filepath, name }, true);
+                await suggestCreateScript({ filepath, name });
             }
         } catch (error) {
             showErrMsg(error);

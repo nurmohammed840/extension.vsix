@@ -41,3 +41,10 @@ Just run `node install`.
     - `utils.ts` - basic utility
     - `lifecycle.ts` - called when the extension is uninstalled
 
+## Todo
+
+- [x] Improve Picker Interface.
+- [x] Improve Output Interface.
+- [x] Revaluate Script
+- [ ] Provide Vscode Proposed API
+- [ ] Peovide Management (Scripts)
