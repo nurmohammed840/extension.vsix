@@ -15,7 +15,6 @@ export async function createBoilerPlate(filepath: string) {
 
 const example = `/// <reference path="${path.join(extensionPath, '@types/api.global.d.ts').replace(/\\/g, '/')}" />
 /// <reference path="${path.join(extensionPath, '@types/vscode.global.d.ts').replace(/\\/g, '/')}" />
-/// <reference path="${path.join(extensionPath, '@types/vscode.proposed.global.d.ts').replace(/\\/g, '/')}" />
 //  @ts-check
 //  API: https://code.visualstudio.com/api/references/vscode-api
 

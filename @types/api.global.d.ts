@@ -1,5 +1,5 @@
-export { }
 import vscode from "vscode";
+
 declare global {
     interface PickerItem {
         fn(): any

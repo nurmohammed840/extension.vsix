@@ -21,7 +21,6 @@
             }
         }
     },
-    "enableProposedApi": true,
     "name": "script",
     "version": "0.2.1",
     "publisher": "Nur",
