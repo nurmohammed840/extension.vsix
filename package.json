@@ -21,8 +21,9 @@
             }
         }
     },
+    "enableProposedApi": true,
     "name": "script",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "publisher": "Nur",
     "license": "MIT",
     "displayName": "Script",

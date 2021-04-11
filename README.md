@@ -13,7 +13,7 @@ All [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode
 
 ## Example
 
-We want to run this script. path `${workspace}/.vscode/main.js`
+Script path: `${workspace}/.vscode/main.js`
 
 ```js 
 // All Visual-Studio-Code API used globaly.
@@ -37,9 +37,6 @@ module.exports = { activate, deactivate }
  - Create a folder named `.vscode` in your workspace.
  - Create a file named `main.js` in `.vscode` folder. 
  - `Reload Window` or `Restart Extension Host` after edit. 
-
-## Script Settings
- - `script.path: string | null` : Default main script directory.
 
 
 **Happy Hacking!**

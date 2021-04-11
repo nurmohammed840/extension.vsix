@@ -46,5 +46,6 @@ Just run `node install`.
 - [x] Improve Picker Interface.
 - [x] Improve Output Interface.
 - [x] Revaluate Script
-- [ ] Provide Vscode Proposed API
+- [x] Provide Vscode Proposed API
+- [ ] Peovide Debugger. 
 - [ ] Peovide Management (Scripts)

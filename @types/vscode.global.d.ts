@@ -1,20 +1,23 @@
-// @ts-nocheck
-// Type definitions for Visual Studio Code 1.52
+//@ts-nocheck
+// Type definitions for Visual Studio Code 1.55
 // Project: https://github.com/microsoft/vscode
 // Definitions by: Visual Studio Code Team, Microsoft <https://github.com/microsoft>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License.
- *  See https://github.com/microsoft/vscode/blob/master/LICENSE.txt for license information.
+ *  See https://github.com/microsoft/vscode/blob/main/LICENSE.txt for license information.
  *--------------------------------------------------------------------------------------------*/
+
 /**
- * Type Definition for Visual Studio Code 1.52 Extension API
+ * Type Definition for Visual Studio Code 1.55 Extension API
  * See https://code.visualstudio.com/api for more information
  */
 import { Thenable } from "./thenable";
 
 declare global {
+
     /**
      * The version of the editor.
      */
@@ -472,7 +475,7 @@ declare global {
          * @return A range that reflects the given change. Will return `this` range if the change
          * is not changing anything.
          */
-        with(change: { start?: Position; end?: Position; }): Range;
+        with(change: { start?: Position, end?: Position }): Range;
     }
 
     /**
@@ -1389,7 +1392,7 @@ declare global {
          * @return A new Uri that reflects the given change. Will return `this` Uri if the change
          *  is not changing anything.
          */
-        with(change: { scheme?: string; authority?: string; path?: string; query?: string; fragment?: string; }): Uri;
+        with(change: { scheme?: string; authority?: string; path?: string; query?: string; fragment?: string }): Uri;
 
         /**
          * Returns a string representation of this Uri. The representation and normalization
@@ -1461,6 +1464,21 @@ declare global {
     }
 
     /**
+     * An error type that should be used to signal cancellation of an operation.
+     *
+     * This type can be used in response to a [cancellation token](#CancellationToken)
+     * being cancelled or when an operation is being cancelled by the
+     * executor of that operation.
+     */
+    class CancellationError extends Error {
+
+        /**
+         * Creates a new cancellation error.
+         */
+        constructor();
+    }
+
+    /**
      * Represents a type which can release resources, such
      * as event listening or a timer.
      */
@@ -1475,7 +1493,7 @@ declare global {
          * @return Returns a new disposable which, upon dispose, will
          * dispose all provided disposables.
          */
-        static from(...disposableLikes: { dispose: () => any; }[]): Disposable;
+        static from(...disposableLikes: { dispose: () => any }[]): Disposable;
 
         /**
          * Creates a new Disposable calling the provided function
@@ -1710,8 +1728,8 @@ declare global {
     /**
      * Options to configure the behaviour of a file open dialog.
      *
-     * * Note 1: A dialog can select files, folders, or both. This is not true for Windows
-     * which enforces to open either files or folder, but *not both*.
+     * * Note 1: On Windows and Linux, a file dialog cannot be both a file selector and a folder selector, so if you
+     * set both `canSelectFiles` and `canSelectFolders` to `true` on these platforms, a folder selector will be shown.
      * * Note 2: Explicitly setting `canSelectFiles` and `canSelectFolders` to `false` is futile
      * and the editor then silently adjusts the options to select files.
      */
@@ -1751,7 +1769,7 @@ declare global {
          * }
          * ```
          */
-        filters?: { [name: string]: string[]; };
+        filters?: { [name: string]: string[] };
 
         /**
          * Dialog title.
@@ -1786,7 +1804,7 @@ declare global {
          * }
          * ```
          */
-        filters?: { [name: string]: string[]; };
+        filters?: { [name: string]: string[] };
 
         /**
          * Dialog title.
@@ -1930,7 +1948,7 @@ declare global {
          * Otherwise, a uri or string should only be used if the pattern is for a file path outside the workspace.
          * @param pattern A file glob pattern like `*.{ts,js}` that will be matched on paths relative to the base.
          */
-        constructor(base: WorkspaceFolder | Uri | string, pattern: string);
+        constructor(base: WorkspaceFolder | Uri | string, pattern: string)
     }
 
     /**
@@ -2266,10 +2284,14 @@ declare global {
          * there is a currently active editor.
          * @param context Context carrying additional information.
          * @param token A cancellation token.
-         * @return An array of commands, quick fixes, or refactorings or a thenable of such. The lack of a result can be
-         * signaled by returning `undefined`, `null`, or an empty array.
+         *
+         * @return An array of code actions, such as quick fixes or refactorings. The lack of a result can be signaled
+         * by returning `undefined`, `null`, or an empty array.
+         *
+         * We also support returning `Command` for legacy reasons, however all new extensions should return
+         * `CodeAction` object instead.
          */
-        provideCodeActions(document: TextDocument, range: Range | Selection, context: CodeActionContext, token: CancellationToken): ProviderResult<(Command | CodeAction)[]>;
+        provideCodeActions(document: TextDocument, range: Range | Selection, context: CodeActionContext, token: CancellationToken): ProviderResult<(Command | T)[]>;
 
         /**
          * Given a code action fill in its [`edit`](#CodeAction.edit)-property. Changes to
@@ -2561,7 +2583,7 @@ declare global {
      *
      * @deprecated This type is deprecated, please use [`MarkdownString`](#MarkdownString) instead.
      */
-    type MarkedString = MarkdownString | string | { language: string; value: string; };
+    type MarkedString = MarkdownString | string | { language: string; value: string };
 
     /**
      * A hover represents additional information for a symbol or word. Hovers are
@@ -2657,6 +2679,134 @@ declare global {
          * signaled by returning `undefined` or `null`.
          */
         provideEvaluatableExpression(document: TextDocument, position: Position, token: CancellationToken): ProviderResult<EvaluatableExpression>;
+    }
+
+    /**
+     * Provide inline value as text.
+     */
+    class InlineValueText {
+        /**
+         * The document range for which the inline value applies.
+         */
+        readonly range: Range;
+        /**
+         * The text of the inline value.
+         */
+        readonly text: string;
+        /**
+         * Creates a new InlineValueText object.
+         *
+         * @param range The document line where to show the inline value.
+         * @param text The value to be shown for the line.
+         */
+        constructor(range: Range, text: string);
+    }
+
+    /**
+     * Provide inline value through a variable lookup.
+     * If only a range is specified, the variable name will be extracted from the underlying document.
+     * An optional variable name can be used to override the extracted name.
+     */
+    class InlineValueVariableLookup {
+        /**
+         * The document range for which the inline value applies.
+         * The range is used to extract the variable name from the underlying document.
+         */
+        readonly range: Range;
+        /**
+         * If specified the name of the variable to look up.
+         */
+        readonly variableName?: string;
+        /**
+         * How to perform the lookup.
+         */
+        readonly caseSensitiveLookup: boolean;
+        /**
+         * Creates a new InlineValueVariableLookup object.
+         *
+         * @param range The document line where to show the inline value.
+         * @param variableName The name of the variable to look up.
+         * @param caseSensitiveLookup How to perform the lookup. If missing lookup is case sensitive.
+         */
+        constructor(range: Range, variableName?: string, caseSensitiveLookup?: boolean);
+    }
+
+    /**
+     * Provide an inline value through an expression evaluation.
+     * If only a range is specified, the expression will be extracted from the underlying document.
+     * An optional expression can be used to override the extracted expression.
+     */
+    class InlineValueEvaluatableExpression {
+        /**
+         * The document range for which the inline value applies.
+         * The range is used to extract the evaluatable expression from the underlying document.
+         */
+        readonly range: Range;
+        /**
+         * If specified the expression overrides the extracted expression.
+         */
+        readonly expression?: string;
+        /**
+         * Creates a new InlineValueEvaluatableExpression object.
+         *
+         * @param range The range in the underlying document from which the evaluatable expression is extracted.
+         * @param expression If specified overrides the extracted expression.
+         */
+        constructor(range: Range, expression?: string);
+    }
+
+    /**
+     * Inline value information can be provided by different means:
+     * - directly as a text value (class InlineValueText).
+     * - as a name to use for a variable lookup (class InlineValueVariableLookup)
+     * - as an evaluatable expression (class InlineValueEvaluatableExpression)
+     * The InlineValue types combines all inline value types into one type.
+     */
+    type InlineValue = InlineValueText | InlineValueVariableLookup | InlineValueEvaluatableExpression;
+
+    /**
+     * A value-object that contains contextual information when requesting inline values from a InlineValuesProvider.
+     */
+    interface InlineValueContext {
+
+        /**
+         * The stack frame (as a DAP Id) where the execution has stopped.
+         */
+        readonly frameId: number;
+
+        /**
+         * The document range where execution has stopped.
+         * Typically the end position of the range denotes the line where the inline values are shown.
+         */
+        readonly stoppedLocation: Range;
+    }
+
+    /**
+     * The inline values provider interface defines the contract between extensions and the VS Code debugger inline values feature.
+     * In this contract the provider returns inline value information for a given document range
+     * and VS Code shows this information in the editor at the end of lines.
+     */
+    interface InlineValuesProvider {
+
+        /**
+         * An optional event to signal that inline values have changed.
+         * @see [EventEmitter](#EventEmitter)
+         */
+        onDidChangeInlineValues?: Event<void> | undefined;
+
+        /**
+         * Provide "inline value" information for a given document and range.
+         * VS Code calls this method whenever debugging stops in the given document.
+         * The returned inline values information is rendered in the editor at the end of lines.
+         *
+         * @param document The document for which the inline values information is needed.
+         * @param viewPort The visible document range for which inline values should be computed.
+         * @param context A bag containing contextual information like the current location.
+         * @param token A cancellation token.
+         * @return An array of InlineValueDescriptors or a thenable that resolves to such. The lack of a result can be
+         * signaled by returning `undefined` or `null`.
+         */
+        provideInlineValues(document: TextDocument, viewPort: Range, context: InlineValueContext, token: CancellationToken): ProviderResult<InlineValue[]>;
     }
 
     /**
@@ -3068,7 +3218,7 @@ declare global {
         /**
          * The icon path or [ThemeIcon](#ThemeIcon) for the edit.
          */
-        iconPath?: Uri | { light: Uri; dark: Uri; } | ThemeIcon;
+        iconPath?: Uri | { light: Uri; dark: Uri } | ThemeIcon;
     }
 
     /**
@@ -3147,7 +3297,7 @@ declare global {
          * be applied successfully.
          * @param metadata Optional metadata for the entry.
          */
-        createFile(uri: Uri, options?: { overwrite?: boolean; ignoreIfExists?: boolean; }, metadata?: WorkspaceEditEntryMetadata): void;
+        createFile(uri: Uri, options?: { overwrite?: boolean, ignoreIfExists?: boolean }, metadata?: WorkspaceEditEntryMetadata): void;
 
         /**
          * Delete a file or folder.
@@ -3155,7 +3305,7 @@ declare global {
          * @param uri The uri of the file that is to be deleted.
          * @param metadata Optional metadata for the entry.
          */
-        deleteFile(uri: Uri, options?: { recursive?: boolean; ignoreIfNotExists?: boolean; }, metadata?: WorkspaceEditEntryMetadata): void;
+        deleteFile(uri: Uri, options?: { recursive?: boolean, ignoreIfNotExists?: boolean }, metadata?: WorkspaceEditEntryMetadata): void;
 
         /**
          * Rename a file or folder.
@@ -3166,7 +3316,7 @@ declare global {
          * ignored. When overwrite and ignoreIfExists are both set overwrite wins.
          * @param metadata Optional metadata for the entry.
          */
-        renameFile(oldUri: Uri, newUri: Uri, options?: { overwrite?: boolean; ignoreIfExists?: boolean; }, metadata?: WorkspaceEditEntryMetadata): void;
+        renameFile(oldUri: Uri, newUri: Uri, options?: { overwrite?: boolean, ignoreIfExists?: boolean }, metadata?: WorkspaceEditEntryMetadata): void;
 
         /**
          * Get all text edits grouped by resource.
@@ -3227,7 +3377,7 @@ declare global {
         appendPlaceholder(value: string | ((snippet: SnippetString) => any), number?: number): SnippetString;
 
         /**
-         * Builder-function that appends a choice (`${1|a,b,c}`) to
+         * Builder-function that appends a choice (`${1|a,b,c|}`) to
          * the [`value`](#SnippetString.value) of this snippet string.
          *
          * @param values The values for choices - the array of strings
@@ -3281,7 +3431,7 @@ declare global {
          * @param token A cancellation token.
          * @return The range or range and placeholder text of the identifier that is to be renamed. The lack of a result can signaled by returning `undefined` or `null`.
          */
-        prepareRename?(document: TextDocument, position: Position, token: CancellationToken): ProviderResult<Range | { range: Range; placeholder: string; }>;
+        prepareRename?(document: TextDocument, position: Position, token: CancellationToken): ProviderResult<Range | { range: Range, placeholder: string }>;
     }
 
     /**
@@ -3707,7 +3857,7 @@ declare global {
         /**
          * Signature help was triggered by the cursor moving or by the document content changing.
          */
-        ContentChange = 3
+        ContentChange = 3,
     }
 
     /**
@@ -3813,7 +3963,7 @@ declare global {
         Operator = 23,
         TypeParameter = 24,
         User = 25,
-        Issue = 26
+        Issue = 26,
     }
 
     /**
@@ -3880,8 +4030,8 @@ declare global {
          *
          * Note that `sortText` is only used for the initial ordering of completion
          * items. When having a leading word (prefix) ordering is based on how
-         * well completion match that prefix and the initial ordering is only used
-         * when completions match equal. The prefix is defined by the
+         * well completions match that prefix and the initial ordering is only used
+         * when completions match equally well. The prefix is defined by the
          * [`range`](#CompletionItem.range)-property and can therefore be different
          * for each completion.
          */
@@ -3894,7 +4044,6 @@ declare global {
          *
          * Note that the filter text is matched against the leading word (prefix) which is defined
          * by the [`range`](#CompletionItem.range)-property.
-         * prefix.
          */
         filterText?: string;
 
@@ -4278,7 +4427,7 @@ declare global {
          * @return An array of color presentations or a thenable that resolves to such. The lack of a result
          * can be signaled by returning `undefined`, `null`, or an empty array.
          */
-        provideColorPresentations(color: Color, context: { document: TextDocument; range: Range; }, token: CancellationToken): ProviderResult<ColorPresentation[]>;
+        provideColorPresentations(color: Color, context: { document: TextDocument, range: Range }, token: CancellationToken): ProviderResult<ColorPresentation[]>;
     }
 
     /**
@@ -4694,6 +4843,10 @@ declare global {
          */
         afterText?: RegExp;
         /**
+         * This rule will only execute if the text above the current line matches this regular expression.
+         */
+        previousLineText?: RegExp;
+        /**
          * The action to execute.
          */
         action: EnterAction;
@@ -4900,8 +5053,8 @@ declare global {
 
             defaultValue?: T;
             globalValue?: T;
-            workspaceValue?: T;
-            workspaceFolderValue?: T;
+            workspaceValue?: T,
+            workspaceFolderValue?: T,
 
             defaultLanguageValue?: T;
             globalLanguageValue?: T;
@@ -5088,7 +5241,7 @@ declare global {
          *
          * Diagnostics with this tag are rendered with a strike through.
          */
-        Deprecated = 2
+        Deprecated = 2,
     }
 
     /**
@@ -5183,9 +5336,9 @@ declare global {
         set(uri: Uri, diagnostics: ReadonlyArray<Diagnostic> | undefined): void;
 
         /**
-         * Replace all entries in this collection.
+         * Replace diagnostics for multiple resources in this collection.
          *
-         * Diagnostics of multiple tuples of the same uri will be merged, e.g
+         *  _Note_ that multiple tuples of the same uri will be merged, e.g
          * `[[file1, [d1]], [file1, [d2]]]` is equivalent to `[[file1, [d1, d2]]]`.
          * If a diagnostics item is `undefined` as in `[file1, undefined]`
          * all previous but not subsequent diagnostics are removed.
@@ -5428,6 +5581,18 @@ declare global {
          * The foreground color for this entry.
          */
         color: string | ThemeColor | undefined;
+
+        /**
+         * The background color for this entry.
+         *
+         * *Note*: only `new ThemeColor('statusBarItem.errorBackground')` is
+         * supported for now. More background colors may be supported in the
+         * future.
+         *
+         * *Note*: when a background color is set, the statusbar may override
+         * the `color` choice to ensure the entry is readable in all themes.
+         */
+        backgroundColor: ThemeColor | undefined;
 
         /**
          * [`Command`](#Command) or identifier of a command to run on click.
@@ -5726,10 +5891,10 @@ declare global {
         extensionKind: ExtensionKind;
 
         /**
-         * The public API ed by this extension. It is an invalid action
+         * The public API exported by this extension. It is an invalid action
          * to access this field before this extension has been activated.
          */
-        readonly s: T;
+        readonly exports: T;
 
         /**
          * Activates this extension and returns its public API.
@@ -5760,7 +5925,7 @@ declare global {
          * The extension is running from an `--extensionTestsPath` and
          * the extension host is running unit tests.
          */
-        Test = 3
+        Test = 3,
     }
 
     /**
@@ -5776,7 +5941,7 @@ declare global {
          * An array to which disposables can be added. When this
          * extension is deactivated the disposables will be disposed.
          */
-        readonly subscriptions: { dispose(): any; }[];
+        readonly subscriptions: { dispose(): any }[];
 
         /**
          * A memento object that stores state in the context
@@ -5804,6 +5969,11 @@ declare global {
              */
             setKeysForSync(keys: string[]): void;
         };
+
+        /**
+         * A storage utility for secrets.
+         */
+        readonly secrets: SecretStorage;
 
         /**
          * The uri of the directory containing the extension.
@@ -5907,6 +6077,11 @@ declare global {
          * other extensions in the host run in `ExtensionMode.Release`.
          */
         readonly extensionMode: ExtensionMode;
+
+        /**
+         * The current `Extension` instance.
+         */
+        readonly extension: Extension<any>;
     }
 
     /**
@@ -5940,6 +6115,48 @@ declare global {
          * @param value A value. MUST not contain cyclic references.
          */
         update(key: string, value: any): Thenable<void>;
+    }
+
+    /**
+     * The event data that is fired when a secret is added or removed.
+     */
+    interface SecretStorageChangeEvent {
+        /**
+         * The key of the secret that has changed.
+         */
+        readonly key: string;
+    }
+
+    /**
+     * Represents a storage utility for secrets, information that is
+     * sensitive.
+     */
+    interface SecretStorage {
+        /**
+         * Retrieve a secret that was stored with key. Returns undefined if there
+         * is no password matching that key.
+         * @param key The key the secret was stored under.
+         * @returns The stored value or `undefined`.
+         */
+        get(key: string): Thenable<string | undefined>;
+
+        /**
+         * Store a secret under a given key.
+         * @param key The key to store the secret under.
+         * @param value The secret.
+         */
+        store(key: string, value: string): Thenable<void>;
+
+        /**
+         * Remove a secret from storage.
+         * @param key The key the secret was stored under.
+         */
+        delete(key: string): Thenable<void>;
+
+        /**
+         * Fires when a secret is stored or deleted.
+         */
+        onDidChange: Event<SecretStorageChangeEvent>;
     }
 
     /**
@@ -6116,7 +6333,7 @@ declare global {
          * the parent process' environment is used. If provided it is merged with
          * the parent process' environment.
          */
-        env?: { [key: string]: string; };
+        env?: { [key: string]: string };
     }
 
     /**
@@ -6224,7 +6441,7 @@ declare global {
          * the parent process' environment is used. If provided it is merged with
          * the parent process' environment.
          */
-        env?: { [key: string]: string; };
+        env?: { [key: string]: string };
     }
 
     /**
@@ -6474,6 +6691,10 @@ declare global {
          * called for tasks returned from the above `provideTasks` method since those
          * tasks are always fully resolved. A valid default implementation for the
          * `resolveTask` method is to return `undefined`.
+         *
+         * Note that when filling in the properties of `task`, you _must_ be sure to
+         * use the exact same `TaskDefinition` and not create a new one. Other properties
+         * may be changed.
          *
          * @param task The task to resolve.
          * @param token A cancellation token.
@@ -6773,7 +6994,7 @@ declare global {
         /**
          * A file has been deleted.
          */
-        Deleted = 3
+        Deleted = 3,
     }
 
     /**
@@ -6829,7 +7050,7 @@ declare global {
          * @param options Configures the watch.
          * @returns A disposable that tells the provider to stop watching the `uri`.
          */
-        watch(uri: Uri, options: { recursive: boolean; excludes: string[]; }): Disposable;
+        watch(uri: Uri, options: { recursive: boolean; excludes: string[] }): Disposable;
 
         /**
          * Retrieve metadata about a file.
@@ -6883,7 +7104,7 @@ declare global {
          * @throws [`FileExists`](#FileSystemError.FileExists) when `uri` already exists, `create` is set but `overwrite` is not set.
          * @throws [`NoPermissions`](#FileSystemError.NoPermissions) when permissions aren't sufficient.
          */
-        writeFile(uri: Uri, content: Uint8Array, options: { create: boolean; overwrite: boolean; }): void | Thenable<void>;
+        writeFile(uri: Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }): void | Thenable<void>;
 
         /**
          * Delete a file.
@@ -6893,7 +7114,7 @@ declare global {
          * @throws [`FileNotFound`](#FileSystemError.FileNotFound) when `uri` doesn't exist.
          * @throws [`NoPermissions`](#FileSystemError.NoPermissions) when permissions aren't sufficient.
          */
-        delete(uri: Uri, options: { recursive: boolean; }): void | Thenable<void>;
+        delete(uri: Uri, options: { recursive: boolean }): void | Thenable<void>;
 
         /**
          * Rename a file or folder.
@@ -6906,7 +7127,7 @@ declare global {
          * @throws [`FileExists`](#FileSystemError.FileExists) when `newUri` exists and when the `overwrite` option is not `true`.
          * @throws [`NoPermissions`](#FileSystemError.NoPermissions) when permissions aren't sufficient.
          */
-        rename(oldUri: Uri, newUri: Uri, options: { overwrite: boolean; }): void | Thenable<void>;
+        rename(oldUri: Uri, newUri: Uri, options: { overwrite: boolean }): void | Thenable<void>;
 
         /**
          * Copy files or folders. Implementing this function is optional but it will speedup
@@ -6920,7 +7141,7 @@ declare global {
          * @throws [`FileExists`](#FileSystemError.FileExists) when `destination` exists and when the `overwrite` option is not `true`.
          * @throws [`NoPermissions`](#FileSystemError.NoPermissions) when permissions aren't sufficient.
          */
-        copy?(source: Uri, destination: Uri, options: { overwrite: boolean; }): void | Thenable<void>;
+        copy?(source: Uri, destination: Uri, options: { overwrite: boolean }): void | Thenable<void>;
     }
 
     /**
@@ -6981,7 +7202,7 @@ declare global {
          * @param uri The resource that is to be deleted.
          * @param options Defines if trash can should be used and if deletion of folders is recursive
          */
-        delete(uri: Uri, options?: { recursive?: boolean; useTrash?: boolean; }): Thenable<void>;
+        delete(uri: Uri, options?: { recursive?: boolean, useTrash?: boolean }): Thenable<void>;
 
         /**
          * Rename a file or folder.
@@ -6990,7 +7211,7 @@ declare global {
          * @param newUri The new location.
          * @param options Defines if existing files should be overwritten.
          */
-        rename(source: Uri, target: Uri, options?: { overwrite?: boolean; }): Thenable<void>;
+        rename(source: Uri, target: Uri, options?: { overwrite?: boolean }): Thenable<void>;
 
         /**
          * Copy files or folders.
@@ -6999,7 +7220,7 @@ declare global {
          * @param destination The destination location.
          * @param options Defines if existing files should be overwritten.
          */
-        copy(source: Uri, target: Uri, options?: { overwrite?: boolean; }): Thenable<void>;
+        copy(source: Uri, target: Uri, options?: { overwrite?: boolean }): Thenable<void>;
 
         /**
          * Check if a given file system supports writing files.
@@ -7202,7 +7423,7 @@ declare global {
         /**
          * Icon for the panel shown in UI.
          */
-        iconPath?: Uri | { light: Uri; dark: Uri; };
+        iconPath?: Uri | { light: Uri; dark: Uri };
 
         /**
          * [`Webview`](#Webview) belonging to the panel.
@@ -7597,6 +7818,13 @@ declare global {
          * from the user's workspace.
          */
         readonly backupId?: string;
+
+        /**
+         * If the URI is an untitled file, this will be populated with the byte data of that file
+         *
+         * If this is provided, your extension should utilize this byte data rather than executing fs APIs on the URI passed in
+         */
+        readonly untitledDocumentData?: Uint8Array;
     }
 
     /**
@@ -7742,7 +7970,7 @@ declare global {
          * your extension should first check to see if any backups exist for the resource. If there is a backup, your
          * extension should load the file contents from there instead of from the resource in the workspace.
          *
-         * `backup` is triggered approximately one second after the the user stops editing the document. If the user
+         * `backup` is triggered approximately one second after the user stops editing the document. If the user
          * rapidly edits the document, `backup` will not be invoked until the editing stops.
          *
          * `backup` is not invoked when `auto save` is enabled (since auto save already persists the resource).
@@ -7834,6 +8062,24 @@ declare global {
          * Changes each time the editor is started.
          */
         const sessionId: string;
+
+        /**
+         * Indicates that this is a fresh install of the application.
+         * `true` if within the first day of installation otherwise `false`.
+         */
+        const isNewAppInstall: boolean;
+
+        /**
+         * Indicates whether the users has telemetry enabled.
+         * Can be observed to determine if the extension should send telemetry.
+         */
+        const isTelemetryEnabled: boolean;
+
+        /**
+         * An [event](#Event) which fires when the user enabled or disables telemetry.
+         * `true` if the user has enabled telemetry or `false` if the user has disabled telemetry.
+         */
+        const onDidChangeTelemetryEnabled: Event<boolean>;
 
         /**
          * The name of a remote. Defined by extensions, popular samples are `wsl` for the Windows
@@ -8438,7 +8684,7 @@ declare global {
          *
          * @return New webview panel.
          */
-        function createWebviewPanel(viewType: string, title: string, showOptions: ViewColumn | { viewColumn: ViewColumn; preserveFocus?: boolean; }, options?: WebviewPanelOptions & WebviewOptions): WebviewPanel;
+        function createWebviewPanel(viewType: string, title: string, showOptions: ViewColumn | { viewColumn: ViewColumn, preserveFocus?: boolean }, options?: WebviewPanelOptions & WebviewOptions): WebviewPanel;
 
         /**
          * Set a message to the status bar. This is a short hand for the more powerful
@@ -8503,7 +8749,7 @@ declare global {
          *
          * @return The thenable the task-callback returned.
          */
-        function withProgress<R>(options: ProgressOptions, task: (progress: Progress<{ message?: string; increment?: number; }>, token: CancellationToken) => Thenable<R>): Thenable<R>;
+        function withProgress<R>(options: ProgressOptions, task: (progress: Progress<{ message?: string; increment?: number }>, token: CancellationToken) => Thenable<R>): Thenable<R>;
 
         /**
          * Creates a status bar [item](#StatusBarItem).
@@ -8823,7 +9069,7 @@ declare global {
          *
          * **NOTE:** The [TreeDataProvider](#TreeDataProvider) that the `TreeView` [is registered with](#window.createTreeView) with must implement [getParent](#TreeDataProvider.getParent) method to access this API.
          */
-        reveal(element: T, options?: { select?: boolean; focus?: boolean; expand?: boolean | number; }): Thenable<void>;
+        reveal(element: T, options?: { select?: boolean, focus?: boolean, expand?: boolean | number }): Thenable<void>;
     }
 
     /**
@@ -8865,7 +9111,8 @@ declare global {
         getParent?(element: T): ProviderResult<T>;
 
         /**
-         * Called only on hover to resolve the [TreeItem](#TreeItem.tooltip) property if it is undefined.
+         * Called on hover to resolve the [TreeItem](#TreeItem.tooltip) property if it is undefined.
+         * Called on tree item click/open to resolve the [TreeItem](#TreeItem.command) property if it is undefined.
          * Only properties that were undefined can be resolved in `resolveTreeItem`.
          * Functionality may be expanded later to include being called to resolve other missing
          * properties on selection and/or on open.
@@ -8875,15 +9122,16 @@ declare global {
          * onDidChangeTreeData should not be triggered from within resolveTreeItem.
          *
          * *Note* that this function is called when tree items are already showing in the UI.
-         * Because of that, no property that changes the presentation (label, description, command, etc.)
+         * Because of that, no property that changes the presentation (label, description, etc.)
          * can be changed.
          *
-         * @param element The object associated with the TreeItem
          * @param item Undefined properties of `item` should be set then `item` should be returned.
+         * @param element The object associated with the TreeItem.
+         * @param token A cancellation token.
          * @return The resolved tree item or a thenable that resolves to such. It is OK to return the given
          * `item`. When no result is returned, the given `item` will be used.
          */
-        resolveTreeItem?(item: TreeItem, element: T): ProviderResult<TreeItem>;
+        resolveTreeItem?(item: TreeItem, element: T, token: CancellationToken): ProviderResult<TreeItem>;
     }
 
     class TreeItem {
@@ -8904,7 +9152,7 @@ declare global {
          * When `falsy`, [Folder Theme Icon](#ThemeIcon.Folder) is assigned, if item is collapsible otherwise [File Theme Icon](#ThemeIcon.File).
          * When a file or folder [ThemeIcon](#ThemeIcon) is specified, icon is derived from the current file icon theme for the specified theme icon using [resourceUri](#TreeItem.resourceUri) (if provided).
          */
-        iconPath?: string | Uri | { light: string | Uri; dark: string | Uri; } | ThemeIcon;
+        iconPath?: string | Uri | { light: string | Uri; dark: string | Uri } | ThemeIcon;
 
         /**
          * A human-readable string which is rendered less prominent.
@@ -9042,7 +9290,7 @@ declare global {
         /**
          * Object with environment variables that will be added to the VS Code process.
          */
-        env?: { [key: string]: string | null; };
+        env?: { [key: string]: string | null };
 
         /**
          * Whether the terminal process environment should be exactly as provided in
@@ -9204,7 +9452,7 @@ declare global {
          * Implement to handle when the number of rows and columns that fit into the terminal panel
          * changes, for example when font size changes or when the panel is resized. The initial
          * state of a terminal's dimensions should be treated as `undefined` until this is triggered
-         * as the size of a terminal isn't know until it shows up in the user interface.
+         * as the size of a terminal isn't known until it shows up in the user interface.
          *
          * When dimensions are overridden by
          * [onDidOverrideDimensions](#Pseudoterminal.onDidOverrideDimensions), `setDimensions` will
@@ -9383,7 +9631,7 @@ declare global {
         /**
          * The location at which progress should show.
          */
-        location: ProgressLocation | { viewId: string; };
+        location: ProgressLocation | { viewId: string };
 
         /**
          * A human-readable string which will be used to describe the
@@ -9636,7 +9884,7 @@ declare global {
         /**
          * Icon for the button.
          */
-        readonly iconPath: Uri | { light: Uri; dark: Uri; } | ThemeIcon;
+        readonly iconPath: Uri | { light: Uri; dark: Uri } | ThemeIcon;
 
         /**
          * An optional tooltip.
@@ -9896,7 +10144,7 @@ declare global {
         /**
          * The files that are going to be renamed.
          */
-        readonly files: ReadonlyArray<{ oldUri: Uri; newUri: Uri; }>;
+        readonly files: ReadonlyArray<{ oldUri: Uri, newUri: Uri }>;
 
         /**
          * Allows to pause the event and to apply a [workspace edit](#WorkspaceEdit).
@@ -9936,7 +10184,7 @@ declare global {
         /**
          * The files that got renamed.
          */
-        readonly files: ReadonlyArray<{ oldUri: Uri; newUri: Uri; }>;
+        readonly files: ReadonlyArray<{ oldUri: Uri, newUri: Uri }>;
     }
 
     /**
@@ -9981,9 +10229,16 @@ declare global {
     }
 
     /**
-     * Namespace for dealing with the current workspace. A workspace is the representation
-     * of the folder that has been opened. There is no workspace when just a file but not a
-     * folder has been opened.
+     * Namespace for dealing with the current workspace. A workspace is the collection of one
+     * or more folders that are opened in a VS Code window (instance).
+     *
+     * It is also possible to open VS Code without a workspace. For example, when you open a
+     * new VS Code window by selecting a file from your platform's File menu, you will not be
+     * inside a workspace. In this mode, some of VS Code's capabilities are reduced but you can
+     * still open text files and edit them.
+     *
+     * Refer to https://code.visualstudio.com/docs/editor/workspaces for more information on
+     * the concept of workspaces in VS Code.
      *
      * The workspace offers support for [listening](#workspace.createFileSystemWatcher) to fs
      * events and for [finding](#workspace.findFiles) files. Both perform well and run _outside_
@@ -10000,22 +10255,33 @@ declare global {
         const fs: FileSystem;
 
         /**
-         * The folder that is open in the editor. `undefined` when no folder
+         * The workspace folder that is open in VS Code. `undefined` when no workspace
          * has been opened.
+         *
+         * Refer to https://code.visualstudio.com/docs/editor/workspaces for more information
+         * on workspaces in VS Code.
          *
          * @deprecated Use [`workspaceFolders`](#workspace.workspaceFolders) instead.
          */
         const rootPath: string | undefined;
 
         /**
-         * List of workspace folders or `undefined` when no folder is open.
+         * List of workspace folders that are open in VS Code. `undefined when no workspace
+         * has been opened.
+         *
+         * Refer to https://code.visualstudio.com/docs/editor/workspaces for more information
+         * on workspaces in VS Code.
+         *
          * *Note* that the first entry corresponds to the value of `rootPath`.
          */
         const workspaceFolders: ReadonlyArray<WorkspaceFolder> | undefined;
 
         /**
-         * The name of the workspace. `undefined` when no folder
+         * The name of the workspace. `undefined` when no workspace
          * has been opened.
+         *
+         * Refer to https://code.visualstudio.com/docs/editor/workspaces for more information on
+         * the concept of workspaces in VS Code.
          */
         const name: string | undefined;
 
@@ -10031,7 +10297,7 @@ declare global {
          * for a workspace that is untitled and not yet saved.
          *
          * Depending on the workspace that is opened, the value will be:
-         *  * `undefined` when no workspace or  a single folder is opened
+         *  * `undefined` when no workspace is opened
          *  * the path of the workspace file as `Uri` otherwise. if the workspace
          * is untitled, the returned URI will use the `untitled:` scheme
          *
@@ -10042,6 +10308,9 @@ declare global {
          * ```typescript
          * vscode.commands.executeCommand('vscode.openFolder', uriOfWorkspace);
          * ```
+         *
+         * Refer to https://code.visualstudio.com/docs/editor/workspaces for more information on
+         * the concept of workspaces in VS Code.
          *
          * **Note:** it is not advised to use `workspace.workspaceFile` to write
          * configuration data into the file. You can use `workspace.getConfiguration().update()`
@@ -10120,7 +10389,7 @@ declare global {
          * @return true if the operation was successfully started and false otherwise if arguments were used that would result
          * in invalid workspace folder state (e.g. 2 folders with the same URI).
          */
-        function updateWorkspaceFolders(start: number, deleteCount: number | undefined | null, ...workspaceFoldersToAdd: { uri: Uri; name?: string; }[]): boolean;
+        function updateWorkspaceFolders(start: number, deleteCount: number | undefined | null, ...workspaceFoldersToAdd: { uri: Uri, name?: string }[]): boolean;
 
         /**
          * Creates a file system watcher.
@@ -10406,7 +10675,7 @@ declare global {
          * @param options Immutable metadata about the provider.
          * @return A [disposable](#Disposable) that unregisters this provider when being disposed.
          */
-        function registerFileSystemProvider(scheme: string, provider: FileSystemProvider, options?: { readonly isCaseSensitive?: boolean; readonly isReadonly?: boolean; }): Disposable;
+        function registerFileSystemProvider(scheme: string, provider: FileSystemProvider, options?: { readonly isCaseSensitive?: boolean, readonly isReadonly?: boolean }): Disposable;
     }
 
     /**
@@ -10415,7 +10684,7 @@ declare global {
      * a '[TextDocument](#TextDocument)' or
      * a '[WorkspaceFolder](#WorkspaceFolder)'
      */
-    type ConfigurationScope = Uri | TextDocument | WorkspaceFolder | { uri?: Uri; languageId: string; };
+    type ConfigurationScope = Uri | TextDocument | WorkspaceFolder | { uri?: Uri, languageId: string };
 
     /**
      * An event describing the change in Configuration
@@ -10674,6 +10943,21 @@ declare global {
          * @return A [disposable](#Disposable) that unregisters this provider when being disposed.
          */
         function registerEvaluatableExpressionProvider(selector: DocumentSelector, provider: EvaluatableExpressionProvider): Disposable;
+
+        /**
+         * Register a provider that returns data for the debugger's 'inline value' feature.
+         * Whenever the generic VS Code debugger has stopped in a source file, providers registered for the language of the file
+         * are called to return textual data that will be shown in the editor at the end of lines.
+         *
+         * Multiple providers can be registered for a language. In that case providers are asked in
+         * parallel and the results are merged. A failing provider (rejected promise or exception) will
+         * not cause a failure of the whole operation.
+         *
+         * @param selector A selector that defines the documents this provider is applicable to.
+         * @param provider An inline values provider.
+         * @return A [disposable](#Disposable) that unregisters this provider when being disposed.
+         */
+        function registerInlineValuesProvider(selector: DocumentSelector, provider: InlineValuesProvider): Disposable;
 
         /**
          * Register a document highlight provider.
@@ -11180,18 +11464,21 @@ declare global {
      * A DebugProtocolMessage is an opaque stand-in type for the [ProtocolMessage](https://microsoft.github.io/debug-adapter-protocol/specification#Base_Protocol_ProtocolMessage) type defined in the Debug Adapter Protocol.
      */
     interface DebugProtocolMessage {
+        // Properties: see details [here](https://microsoft.github.io/debug-adapter-protocol/specification#Base_Protocol_ProtocolMessage).
     }
 
     /**
      * A DebugProtocolSource is an opaque stand-in type for the [Source](https://microsoft.github.io/debug-adapter-protocol/specification#Types_Source) type defined in the Debug Adapter Protocol.
      */
     interface DebugProtocolSource {
+        // Properties: see details [here](https://microsoft.github.io/debug-adapter-protocol/specification#Types_Source).
     }
 
     /**
      * A DebugProtocolBreakpoint is an opaque stand-in type for the [Breakpoint](https://microsoft.github.io/debug-adapter-protocol/specification#Types_Breakpoint) type defined in the Debug Adapter Protocol.
      */
     interface DebugProtocolBreakpoint {
+        // Properties: see details [here](https://microsoft.github.io/debug-adapter-protocol/specification#Types_Breakpoint).
     }
 
     /**
@@ -11377,7 +11664,7 @@ declare global {
          * the parent process' environment is used. If provided it is merged with
          * the parent process' environment.
          */
-        env?: { [key: string]: string; };
+        env?: { [key: string]: string };
 
         /**
          * The current working directory for the executed debug adapter.
@@ -11416,7 +11703,7 @@ declare global {
         readonly path: string;
 
         /**
-         * Create a description for a debug adapter running as a socket based server.
+         * Create a description for a debug adapter running as a Named Pipe (on Windows)/UNIX Domain Socket (on non-Windows) based server.
          */
         constructor(path: string);
     }
@@ -11818,7 +12105,7 @@ declare global {
      * surface from the `activate`-call.
      *
      * ```javascript
-     *  function activate(context: vscode.ExtensionContext) {
+     * function activate(context: vscode.ExtensionContext) {
      *     let api = {
      *         sum(a, b) {
      *             return a + b;
@@ -11827,17 +12114,17 @@ declare global {
      *             return a * b;
      *         }
      *     };
-     *     // '' public api-surface
+     *     // 'export' public api-surface
      *     return api;
      * }
      * ```
      * When depending on the API of another extension add an `extensionDependencies`-entry
      * to `package.json`, and use the [getExtension](#extensions.getExtension)-function
-     * and the [s](#Extension.s)-property, like below:
+     * and the [exports](#Extension.exports)-property, like below:
      *
      * ```javascript
      * let mathExt = extensions.getExtension('genius.math');
-     * let importedApi = mathExt.s;
+     * let importedApi = mathExt.exports;
      *
      * console.log(importedApi.mul(42, 1));
      * ```
@@ -11872,7 +12159,6 @@ declare global {
         const onDidChange: Event<void>;
     }
 
-    //#region Comments
     /**
      * Collapsible state of a [comment thread](#CommentThread)
      */
@@ -12139,7 +12425,7 @@ declare global {
         /**
          * Optional reaction handler for creating and deleting reactions on a [comment](#Comment).
          */
-        reactionHandler?: (comment: Comment, reaction: CommentReaction) => Promise<void>;
+        reactionHandler?: (comment: Comment, reaction: CommentReaction) => Thenable<void>;
 
         /**
          * Dispose this comment controller.
@@ -12162,6 +12448,7 @@ declare global {
     }
 
     //#endregion
+
     /**
      * Represents a session of a currently logged in user.
      */
@@ -12215,6 +12502,9 @@ declare global {
          * on the accounts activity bar icon. An entry for the extension will be added under the menu to sign in. This
          * allows quietly prompting the user to sign in.
          *
+         * If there is a matching session but the extension has not been granted access to it, setting this to true
+         * will also result in an immediate modal dialog, and false will add a numbered badge to the accounts icon.
+         *
          * Defaults to false.
          */
         createIfNone?: boolean;
@@ -12257,6 +12547,84 @@ declare global {
     }
 
     /**
+     * Options for creating an [AuthenticationProvider](#AuthenticationProvider).
+     */
+    interface AuthenticationProviderOptions {
+        /**
+         * Whether it is possible to be signed into multiple accounts at once with this provider.
+         * If not specified, will default to false.
+        */
+        readonly supportsMultipleAccounts?: boolean;
+    }
+
+    /**
+    * An [event](#Event) which fires when an [AuthenticationSession](#AuthenticationSession) is added, removed, or changed.
+    */
+    interface AuthenticationProviderAuthenticationSessionsChangeEvent {
+        /**
+         * The [AuthenticationSession](#AuthenticationSession)s of the [AuthenticationProvider](#AuthentiationProvider) that have been added.
+        */
+        readonly added?: ReadonlyArray<AuthenticationSession>;
+
+        /**
+         * The [AuthenticationSession](#AuthenticationSession)s of the [AuthenticationProvider](#AuthentiationProvider) that have been removed.
+         */
+        readonly removed?: ReadonlyArray<AuthenticationSession>;
+
+        /**
+         * The [AuthenticationSession](#AuthenticationSession)s of the [AuthenticationProvider](#AuthentiationProvider) that have been changed.
+         * A session changes when its data excluding the id are updated. An example of this is a session refresh that results in a new
+         * access token being set for the session.
+         */
+        readonly changed?: ReadonlyArray<AuthenticationSession>;
+    }
+
+    /**
+     * A provider for performing authentication to a service.
+     */
+    interface AuthenticationProvider {
+        /**
+         * An [event](#Event) which fires when the array of sessions has changed, or data
+         * within a session has changed.
+         */
+        readonly onDidChangeSessions: Event<AuthenticationProviderAuthenticationSessionsChangeEvent>;
+
+        /**
+         * Get a list of sessions.
+         * @param scopes An optional list of scopes. If provided, the sessions returned should match
+         * these permissions, otherwise all sessions should be returned.
+         * @returns A promise that resolves to an array of authentication sessions.
+         */
+        getSessions(scopes?: string[]): Thenable<ReadonlyArray<AuthenticationSession>>;
+
+        /**
+         * Prompts a user to login.
+         *
+         * If login is successful, the onDidChangeSessions event should be fired.
+         *
+         * If login fails, a rejected promise should be returned.
+         *
+         * If the provider has specified that it does not support multiple accounts,
+         * then this should never be called if there is already an existing session matching these
+         * scopes.
+         * @param scopes A list of scopes, permissions, that the new session should be created with.
+         * @returns A promise that resolves to an authentication session.
+         */
+        createSession(scopes: string[]): Thenable<AuthenticationSession>;
+
+        /**
+         * Removes the session corresponding to session id.
+         *
+         * If the removal is successful, the onDidChangeSessions event should be fired.
+         *
+         * If a session cannot be removed, the provider should reject with an error message.
+         * @param sessionId The id of the session to remove.
+         */
+        removeSession(sessionId: string): Thenable<void>;
+    }
+
+
+    /**
      * Namespace for authentication.
      */
     namespace authentication {
@@ -12273,7 +12641,7 @@ declare global {
          * @param options The [getSessionOptions](#GetSessionOptions) to use
          * @returns A thenable that resolves to an authentication session
          */
-        function getSession(providerId: string, scopes: string[], options: AuthenticationGetSessionOptions & { createIfNone: true; }): Thenable<AuthenticationSession>;
+        function getSession(providerId: string, scopes: string[], options: AuthenticationGetSessionOptions & { createIfNone: true }): Thenable<AuthenticationSession>;
 
         /**
          * Get an authentication session matching the desired scopes. Rejects if a provider with providerId is not
@@ -12295,5 +12663,19 @@ declare global {
          * been added, removed, or changed.
          */
         const onDidChangeSessions: Event<AuthenticationSessionsChangeEvent>;
+
+        /**
+         * Register an authentication provider.
+         *
+         * There can only be one provider per id and an error is being thrown when an id
+         * has already been used by another provider. Ids are case-sensitive.
+         *
+         * @param id The unique identifier of the provider.
+         * @param label The human-readable name of the provider.
+         * @param provider The authentication provider provider.
+         * @params options Additional options for the provider.
+         * @return A [disposable](#Disposable) that unregisters this provider when being disposed.
+         */
+        function registerAuthenticationProvider(id: string, label: string, provider: AuthenticationProvider, options?: AuthenticationProviderOptions): Disposable;
     }
 }
