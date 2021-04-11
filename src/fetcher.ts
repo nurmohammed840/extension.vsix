@@ -37,11 +37,12 @@ export function suggestCreateScript(script: Script) {
     if (!isSuggestCreate || menager.getOldState(script) == RegistryState.exclude) {
         return exclude();
     }
-    return show.infoMsg(`Create a script. (${script.name}) ${script.filepath}`, {
+    return show.infoMsg(`Create script. (${script.name}) ${script.filepath}`, {
         Create: () => {
             menager.allow(script);
             createBoilerPlate(script.filepath);
         },
+        Deny: exclude,
         _: exclude,
     });
 }

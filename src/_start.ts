@@ -49,6 +49,10 @@ let revaluatePickerItem: PickerItem[] = [];
 let createScriptPickerItem: PickerItem[] = [];
 
 const revaluate = picker("Revaluate", () => {
+    if (revaluatePickerItem.length == 1) {
+        revaluatePickerItem[0]?.fn();
+        return
+    }
     quickPicker.items = revaluatePickerItem;
     quickPicker.show();
 });
@@ -64,17 +68,18 @@ menager.onChange(() => {
     const Scripts = menager.getRegisteredScripts();
     // Updataing PickerItem by replace it, rather then mutation,
     // For simplicity sake 
+
     revaluatePickerItem = Scripts.allowed.map(script => ({
         label: script.name,
         detail: script.filepath,
         fn() { executor.revaluate(script) }
-    }))
+    }));
 
     createScriptPickerItem = Scripts.exclude.map(script => ({
         label: script.name,
         detail: script.filepath,
         fn() {
-            menager.allow(script)
+            menager.allow(script);
             return createBoilerPlate(script.filepath);
         }
     }));
