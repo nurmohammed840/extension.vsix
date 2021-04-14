@@ -1,10 +1,10 @@
 ## [Just-Black](https://github.com/nurmohammed840/extension.vsix/tree/Just-Black) 
-This drak theme was desine spacifely for syntax highlighting .
+This dark theme was designed specifically for syntax highlighting.
 
 <img src="https://raw.githubusercontent.com/nurmohammed840/extension.vsix/Just-Black/img/one.png" width="500"/>
 
 ## [Script](https://github.com/nurmohammed840/extension.vsix/tree/Script) 
-This extension allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api). You can also use it as playground.
+This extension allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api). You can also use it as a playground.
 
 <img src="https://i.imgur.com/5PusvCK.gif" alt="collaborate" width="500"/>
 
