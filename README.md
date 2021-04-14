@@ -1,4 +1,4 @@
-# Just Black for VSCode
+# Just Black for VS Code
 This dark theme was designed specifically for syntax highlighting.
 
 ## Info
@@ -9,7 +9,6 @@ This dark theme was designed specifically for syntax highlighting.
 created November 2019
 
 ### Recommended Settings
-
 ```json
 {
     "workbench.sash.size": 1,
