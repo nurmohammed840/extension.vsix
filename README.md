@@ -1,4 +1,4 @@
-## [Just-Black](https://github.com/nurmohammed840/extension.vsix/tree/Just-Black) 
+## [Just Black for VS Code](https://github.com/nurmohammed840/extension.vsix/tree/Just-Black) 
 This dark theme was designed specifically for syntax highlighting.
 
 <img src="https://raw.githubusercontent.com/nurmohammed840/extension.vsix/Just-Black/img/one.png" width="500"/>
