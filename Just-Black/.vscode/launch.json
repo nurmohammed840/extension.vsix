@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}"
+            ],
+            "name": "Launch Extension",
+            "preLaunchTask": "",
+            "request": "launch",
+            "type": "pwa-extensionHost"
+        }
+    ]
+}
