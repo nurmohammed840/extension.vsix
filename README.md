@@ -7,14 +7,3 @@ This dark theme was designed specifically for syntax highlighting.
 This extension allow you to run [Visual-Studio-Code API](https://code.visualstudio.com/api/references/vscode-api). You can also use it as a playground.
 
 <img src="https://i.imgur.com/5PusvCK.gif" alt="collaborate" width="500"/>
-
-### Collaboration
-
-<img src="https://miro.medium.com/max/6400/1*xe9kgx33a2DHVV3tCjFp2Q.jpeg" alt="collaborate" width="500"/>
-
-You can collaborate by:
-- Reporting bugs
-- Giving feedback
-- Feature request
-- Refactoring some code 
-- Improving documentation
