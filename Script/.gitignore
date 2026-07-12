@@ -1,0 +1,17 @@
+node_modules
+
+src/*.js
+src/*.js.map
+
+# files is created, In development.
+__Registry__.json
+.vscode/main.js
+.vscode/jsconfig.json
+
+# ignore dev setup
+yarn.lock
+yarn-error.log
+package-lock.json
+
+# extension package
+*.vsix

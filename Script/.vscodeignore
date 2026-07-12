@@ -1,0 +1,19 @@
+node_modules
+
+# This file is created, In development.
+__Registry__.json
+
+# ignore typescript, and javascript source map
+src/*.ts
+src/*.js.map
+tsconfig.json
+
+install.js
+
+# ignore dev setup
+*.vsix
+.vscode
+.vscodeignore
+yarn.lock
+yarn-error.log
+package-lock.json
