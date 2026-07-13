@@ -1,0 +1,7 @@
+{
+  "version": "5",
+  "remote": {
+    "https://esm.sh/hjson@3.2.2": "3dd09a81f89365577f54e2114e40afd73591a193e0366e44a425ceb166110806",
+    "https://esm.sh/hjson@3.2.2/denonext/hjson.mjs": "b1b63fc60a845adf997d62bce7d9b480d93927cf54fe4d2a4b867699370ea574"
+  }
+}

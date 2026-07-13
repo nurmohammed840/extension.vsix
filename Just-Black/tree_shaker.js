@@ -1,23 +1,21 @@
-// @ts-check
-const fs = require("fs").promises;
-const { parse } = require("hjson");
+// deno-lint-ignore no-import-prefix
+import { parse } from "https://esm.sh/hjson@3.2.2";
 
 /** Run This Script, Before Any Pull Request. It Remove All Dead Code And Sort Color Schema. */
 async function main() {
     const
-        buffer = await fs.readFile("./JustBlack.json"),
+        buffer = await Deno.readTextFile("./JustBlack.json"),
         tokenColorsMultiScope = [],
         tokenColorsSingleScope = [],
         tokenColorsByStyles = {},
         tokenColorsByTextmate = {},
-        colorSchema = parse(buffer.toString());
+        colorSchema = parse(buffer);
 
     console.time("Successful");
 
     function addTokenColorsByTextmate(textmate, { foreground = "", fontStyle = "" }) {
         const styleKey = (foreground + ";" + fontStyle).trim();
-        if (foreground || fontStyle)
-            tokenColorsByTextmate[textmate] = styleKey;
+        if (foreground || fontStyle) tokenColorsByTextmate[textmate] = styleKey;
     }
 
     for (const { scope, settings } of colorSchema.tokenColors)
@@ -41,12 +39,12 @@ async function main() {
             tokenColorsMultiScope.push({ scope: scope.sort(), settings: { foreground, fontStyle } })
     }
 
-    colorSchema.tokenColors =
-        tokenColorsSingleScope.sort((a, b) => a.scope < b.scope && -1)
+    colorSchema.tokenColors = tokenColorsSingleScope
+        .sort((a, b) => a.scope < b.scope && -1)
             .concat(tokenColorsMultiScope.sort((a, b) => a.scope.length - b.scope.length));
 
     console.timeEnd("Successful");
-    return fs.writeFile("./JustBlack.json", JSON.stringify(colorSchema, null, 4));
+    return Deno.writeTextFile("./JustBlack.json", JSON.stringify(colorSchema, null, 4));
 }
 
 console.time("Done");
