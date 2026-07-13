@@ -2,7 +2,7 @@
 
 This dark theme was designed specifically for syntax highlighting.
 
-<img src="https://raw.githubusercontent.com/nurmohammed840/extension.vsix/Just-Black/img/one.png" width="500"/>
+<img src="https://raw.githubusercontent.com/nurmohammed840/extension.vsix/refs/heads/master/Just-Black/img/one.png" width="500"/>
 
 ## [Script](https://github.com/nurmohammed840/extension.vsix/tree/master/Script) 
 
