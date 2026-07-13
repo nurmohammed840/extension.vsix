@@ -43,7 +43,7 @@ async function main() {
         .sort((a, b) => a.scope < b.scope && -1)
         .concat(tokenColorsMultiScope.sort((a, b) => a.scope.length - b.scope.length));
 
-    return Deno.writeTextFile("./JustBlack.json", JSON.stringify(justBlack, null, 4));
+    return Deno.writeTextFile("./JustBlack.json", JSON.stringify(justBlack, null, 2));
 }
 
 console.time("Done");
