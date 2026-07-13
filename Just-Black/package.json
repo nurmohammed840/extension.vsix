@@ -1,8 +1,8 @@
 {
   "name": "just-black",
   "displayName": "Just Black",
-  "description": "Dark Theme With Syntax Highlighter!",
-  "version": "4.0.2",
+  "description": "Dark Theme With Syntax Highlighter",
+  "version": "4.0.3",
   "publisher": "Nur",
   "engines": {
     "vscode": "^1.100.0"

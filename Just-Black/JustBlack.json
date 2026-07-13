@@ -703,7 +703,7 @@
         "storage.type"
       ],
       "settings": {
-        "foreground": "#0088FF",
+        "foreground": "#08f",
         "fontStyle": ""
       }
     },
@@ -1132,7 +1132,7 @@
     },
     "keyword.controlFlow": {
       "fontStyle": "",
-      "foreground": "#09f"
+      "foreground": "#08f"
     },
     "namespace": {
       "fontStyle": "",
@@ -1144,7 +1144,7 @@
     },
     "macro": {
       "fontStyle": "",
-      "foreground": "#88ff00"
+      "foreground": "#8f0"
     },
     "string": {
       "fontStyle": "",
