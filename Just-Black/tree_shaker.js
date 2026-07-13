@@ -11,7 +11,9 @@ async function main() {
         tokenColorsByStyles = {},
         tokenColorsByTextmate = {};
 
-    justBlack = { ...justBlack, ...justBlackSemantic };
+    justBlack = { name: "JustBlack", ...justBlack, ...justBlackSemantic };
+
+    delete justBlack.$schema;
 
     function addTokenColorsByTextmate(textmate, { foreground = "", fontStyle = "" }) {
         const styleKey = (foreground + ";" + fontStyle).trim();

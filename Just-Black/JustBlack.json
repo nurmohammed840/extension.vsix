@@ -60,7 +60,7 @@
     "editorMarkerNavigation.background": "#8f93a205",
     "editorOverviewRuler.border": "#000000",
     "editorOverviewRuler.errorForeground": "#ff537040",
-    "editorOverviewRuler.findMatchForeground": "#80cbc4",
+    "editorOverviewRuler.findMatchForeground": "#3a94bc99",
     "editorOverviewRuler.infoForeground": "#82aaff40",
     "editorOverviewRuler.warningForeground": "#ffcb6b40",
     "editorRuler.foreground": "#3b3f51",
@@ -703,7 +703,7 @@
         "storage.type"
       ],
       "settings": {
-        "foreground": "#08f",
+        "foreground": "#0088FF",
         "fontStyle": ""
       }
     },
