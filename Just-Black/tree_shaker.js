@@ -3,22 +3,22 @@ import { parse } from "https://esm.sh/hjson@3.2.2";
 
 /** Run This Script, Before Any Pull Request. It Remove All Dead Code And Sort Color Schema. */
 async function main() {
+    let justBlack = parse(await Deno.readTextFile("./JustBlack.json"));
     const
-        buffer = await Deno.readTextFile("./JustBlack.json"),
+        justBlackSemantic = parse(await Deno.readTextFile("./JustBlack.semantic.json")),
         tokenColorsMultiScope = [],
         tokenColorsSingleScope = [],
         tokenColorsByStyles = {},
-        tokenColorsByTextmate = {},
-        colorSchema = parse(buffer);
+        tokenColorsByTextmate = {};
 
-    console.time("Successful");
+    justBlack = { ...justBlack, ...justBlackSemantic };
 
     function addTokenColorsByTextmate(textmate, { foreground = "", fontStyle = "" }) {
         const styleKey = (foreground + ";" + fontStyle).trim();
         if (foreground || fontStyle) tokenColorsByTextmate[textmate] = styleKey;
     }
 
-    for (const { scope, settings } of colorSchema.tokenColors)
+    for (const { scope, settings } of justBlack.tokenColors)
         if (Array.isArray(scope))
             for (const textmate of scope)
                 addTokenColorsByTextmate(textmate, settings);
@@ -39,12 +39,11 @@ async function main() {
             tokenColorsMultiScope.push({ scope: scope.sort(), settings: { foreground, fontStyle } })
     }
 
-    colorSchema.tokenColors = tokenColorsSingleScope
+    justBlack.tokenColors = tokenColorsSingleScope
         .sort((a, b) => a.scope < b.scope && -1)
-            .concat(tokenColorsMultiScope.sort((a, b) => a.scope.length - b.scope.length));
+        .concat(tokenColorsMultiScope.sort((a, b) => a.scope.length - b.scope.length));
 
-    console.timeEnd("Successful");
-    return Deno.writeTextFile("./JustBlack.json", JSON.stringify(colorSchema, null, 4));
+    return Deno.writeTextFile("./JustBlack.json", JSON.stringify(justBlack, null, 4));
 }
 
 console.time("Done");

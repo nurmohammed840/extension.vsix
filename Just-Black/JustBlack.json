@@ -1031,5 +1031,132 @@
                 "fontStyle": ""
             }
         }
-    ]
+    ],
+    "semanticHighlighting": true,
+    "semanticTokenColors": {
+        "operator": {
+            "fontStyle": "",
+            "foreground": "#fff"
+        },
+        "variable": {
+            "fontStyle": "",
+            "foreground": "#eee"
+        },
+        "constParameter": {
+            "fontStyle": "",
+            "foreground": "#eee"
+        },
+        "parameter": {
+            "fontStyle": "",
+            "foreground": "#eee"
+        },
+        "function": {
+            "fontStyle": "",
+            "foreground": "#8f0"
+        },
+        "method": {
+            "fontStyle": "",
+            "foreground": "#8f0"
+        },
+        "variable.callable": {
+            "fontStyle": "",
+            "foreground": "#8f0"
+        },
+        "parameter.callable": {
+            "fontStyle": "",
+            "foreground": "#8f0"
+        },
+        "property": {
+            "fontStyle": "",
+            "foreground": "#b7f"
+        },
+        "boolean": {
+            "fontStyle": "",
+            "foreground": "#ff0"
+        },
+        "number": {
+            "fontStyle": "",
+            "foreground": "#ff0"
+        },
+        "builtinType": {
+            "fontStyle": "",
+            "foreground": "#ff0"
+        },
+        "comment": {
+            "fontStyle": "",
+            "foreground": "#666"
+        },
+        "interface": {
+            "fontStyle": "",
+            "foreground": "#f07"
+        },
+        "typeParameter": {
+            "fontStyle": "",
+            "foreground": "#f07"
+        },
+        "enum": {
+            "fontStyle": "",
+            "foreground": "#0ff"
+        },
+        "enumMember": {
+            "fontStyle": "",
+            "foreground": "#0ff"
+        },
+        "type": {
+            "fontStyle": "",
+            "foreground": "#f07"
+        },
+        "struct": {
+            "fontStyle": "",
+            "foreground": "#f70"
+        },
+        "selfKeyword": {
+            "fontStyle": "",
+            "foreground": "#f70"
+        },
+        "selfTypeKeyword": {
+            "fontStyle": "",
+            "foreground": "#f70"
+        },
+        "typeAlias": {
+            "fontStyle": "",
+            "foreground": "#f70"
+        },
+        "keyword": {
+            "fontStyle": "",
+            "foreground": "#08f"
+        },
+        "keyword.async.controlFlow": {
+            "fontStyle": "",
+            "foreground": "#08f"
+        },
+        "keyword.controlFlow": {
+            "fontStyle": "italic bold",
+            "foreground": "#09f"
+        },
+        "namespace": {
+            "fontStyle": "",
+            "foreground": "#f0f"
+        },
+        "derive": {
+            "fontStyle": "",
+            "foreground": "#0f8"
+        },
+        "macro": {
+            "fontStyle": "",
+            "foreground": "#88ff00"
+        },
+        "string": {
+            "fontStyle": "",
+            "foreground": "#f88"
+        },
+        "keyword.unsafe": {
+            "fontStyle": "",
+            "foreground": "#f00"
+        },
+        "decorator": {
+            "fontStyle": "",
+            "foreground": "#777"
+        }
+    }
 }
