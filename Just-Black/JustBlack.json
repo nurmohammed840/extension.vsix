@@ -1131,7 +1131,7 @@
             "foreground": "#08f"
         },
         "keyword.controlFlow": {
-            "fontStyle": "italic bold",
+            "fontStyle": "",
             "foreground": "#09f"
         },
         "namespace": {
